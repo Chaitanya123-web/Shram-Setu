@@ -1,0 +1,170 @@
+/* Reset styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  height: auto;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Body background */
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; /* instead of height */
+  background: #ffce9a5b;
+  overflow-x: hidden;
+  padding: 20px;
+}
+
+/* Container */
+.container {
+  display: flex;
+  width: 90%;
+  max-width: 950px;
+  min-height: 70vh;  /* Use relative height */
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
+  border-radius: 14px;
+  overflow: hidden;
+  flex-wrap: wrap; /* ensures content doesn't overflow */
+}
+/* Left Panel (Logo + Tagline) */
+.left-panel {
+  background: #607894;
+  color: #0d3553;
+  width: 40%;
+  padding: 40px 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.left-panel .logo {
+  width: 210px;
+  height: 220px;
+}
+
+.left-panel .p {
+  font-size: 20px;
+  color: #ffce9a;
+}
+
+/* Right Panel (Form) */
+.right-panel {
+  background-color: white;
+  width: 60%;
+  padding: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.form-box {
+  width: 100%;
+}
+
+.form-box h1 {
+  margin-bottom: 20px;
+  text-align: center;
+  color:  #1E2D3D;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+form label {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #334155;
+}
+
+form input {
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+}
+
+/* Password eye icon */
+.input-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.input-wrapper input {
+  width: 100%;
+  padding: 10px 40px 10px 10px; /* Add right padding for icon space */
+  border: 1px solid #cbd5e1;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.toggle-password {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  user-select: none;
+  font-size: 18px;
+  color: #64748b; /* muted slate */
+}
+
+/* Button */
+button {
+  margin-top: 20px;
+  padding: 12px;
+  background-color: #607894;
+  border: none;
+  color: white;
+  font-weight: bold;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+button:hover {
+  background-color: #1E2D3D;
+}
+
+/* Navigation link */
+p {
+  margin-top: 15px;
+  text-align: center;
+  font-size: 14px;
+}
+
+a {
+  color: #1E2D3D;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .left-panel, .right-panel {
+    width: 100%;
+    height: auto;
+  }
+
+  .left-panel {
+    padding: 30px;
+  }
+
+  .right-panel {
+    padding: 30px;
+  }
+}

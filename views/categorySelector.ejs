@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Service Category Selection</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      background-color: #ffce9a;
+      box-sizing: border-box;
+      font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    }
+    
+    body {
+      color: rgb(2, 8, 23);
+      background-color: #ffce9a;
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 24px;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      padding: 32px 16px;
+      margin: 0 auto;
+    }
+    
+    h1 {
+      font-size: 30px;
+      font-weight: 600;
+      text-align: center;
+      margin-bottom: 32px;
+      line-height: 36px;
+    }
+    
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+    
+    .category-link {
+      display: block;
+      text-decoration: none;
+    }
+    
+    .category-button {
+      width: 100%;
+      height: 96px;
+      background-color: rgb(226, 232, 240);
+      border: none;
+      border-radius: 8px;
+      color: rgb(30, 41, 59);
+      font-size: 18px;
+      font-weight: 500;
+      line-height: 28px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .category-button:hover {
+      background-color: rgb(203, 213, 225);
+    }
+    
+    .extra-button-container {
+      margin-top: 32px;
+    }
+    
+    .extra-button {
+      width: 100%;
+      height: 96px;
+      background-color: rgb(226, 232, 240);
+      border: none;
+      border-radius: 8px;
+      color: rgb(30, 41, 59);
+      font-size: 18px;
+      font-weight: 500;
+      line-height: 28px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 16px;
+      transition: background-color 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .extra-button:hover {
+      background-color: rgb(203, 213, 225);
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 1023px) {
+      .category-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+    
+    @media (max-width: 767px) {
+      .category-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    
+    @media (max-width: 479px) {
+      .category-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Select Category</h1>
+    
+    <div class="category-grid">
+      <a href="/hireworker?worker=Carpenter" class="category-link" name="Carpenter">
+        <button class="category-button" data-info="Carpenters create and repair wooden structures like furniture and buildings.">Carpenter</button>
+      </a>
+      
+      <a href="/hireworker?worker=Plumber" class="category-link" name="Plumber">
+        <button class="category-button" data-info="Plumbers install and repair pipes for water, gas, and drainage systems.">Plumber</button>
+      </a>
+      
+      <a href="/hireworker?worker=Electrician" class="category-link" name="Electrician">
+        <button class="category-button" data-info="Electricians handle electrical wiring, installations, and maintenance.">Electrician</button>
+      </a>
+      
+      <a href="/hireworker?worker=Labour" class="category-link" name="Labour">
+        <button class="category-button" data-info="General laborers assist in construction and other physically demanding tasks.">Labour</button>
+      </a>
+      
+      <a href="/hireworker?worker=Mechanic" class="category-link" name="Mechanic">
+        <button class="category-button" data-info="Mechanics repair and maintain vehicles and machinery.">Mechanic</button>
+      </a>
+      
+      <a href="/hireworker?worker=Painter" class="category-link" name="Painter">
+        <button class="category-button" data-info="Painters apply paint to surfaces, improving aesthetics and protection.">Painter</button>
+      </a>
+      
+      <a href="/hireworker?worker=Welder" class="category-link" name="Welder">
+        <button class="category-button" data-info="Welders join metals together using specialized tools and techniques.">Welder</button>
+      </a>
+      
+      <a href="/hireworker?worker=Something else" class="category-link" name="Something else">
+        <button class="category-button" data-info="Need a different service? Let us know!">Something else</button>
+      </a>
+    </div>
+    
+    <div class="extra-button-container">
+      <button class="extra-button" id="info-box"></button>
+    </div>
+
+  </div>
+      </div>
+  </div>
+
+  <script>
+    const infoBox = document.getElementById("info-box");
+
+    document.querySelectorAll(".category-button").forEach(button => {
+      button.addEventListener("mouseover", () => {
+        infoBox.textContent = button.getAttribute("data-info");
+      });
+    });
+  </script>
+
+</body>
+</html>

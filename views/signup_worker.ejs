@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sign Up</title>
+  <link rel="stylesheet" href="style/style.css" />
+</head>
+<body>
+  <div class="container">
+    
+    <!-- Left Panel -->
+    <div class="left-panel">
+      <img src="images/logo.png" alt="Shram Setu Logo" class="logo"/>
+      <p class="p">Connecting Labor with Dignity</p>
+    </div>
+
+    <!-- Right Panel - Sign Up -->
+    <div class="right-panel">
+      <div class="form-box">
+        <h1>Sign Up As Worker</h1>
+        <form action="/signup_worker" method="post">
+          <label for="name">Name</label>
+          <input type="text" id="name" placeholder="Enter your Name" name="name" required />
+
+          <label for="signup-id">Mobile Number</label>
+          <input type="number" id="signup-id" placeholder= "Enter you Mobile Number" name="mobile" required />
+
+          <label for="job">Job</label>
+          <input type="text" id="job" placeholder= "Enter you job" name="job" required />
+
+          <label for="location">Location</label>
+          <input type="text" id="location" placeholder= "Enter you location" name="location" required />
+
+          <label for="signup-password">Password</label>
+          <div class="input-wrapper">
+            <input type="password" id="signup-password" placeholder="Create password" name="password" required />
+            <span class="toggle-password" onclick="togglePassword('signup-password', this)">👀</span>
+          </div>
+
+          <label for="confirm-password">Confirm Password</label>
+          <div class="input-wrapper">
+            <input type="password" id="confirm-password" placeholder="Re-enter password" name="confirm_password" required />
+            <span class="toggle-password" onclick="togglePassword('confirm-password', this)">👀</span>
+          </div>
+
+          <button type="submit">Sign Up</button>
+          <p>Already have an account? <a href="/login_worker">Login</a></p>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="script/script.js"></script>
+</body>
+</html>

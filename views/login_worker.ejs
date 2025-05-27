@@ -1,0 +1,38 @@
+<!-- login.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <link rel="stylesheet" href="style/style.css">
+</head>
+<body>
+  <div class="container">
+    <div class="left-panel">
+      <img src="images/logo.png" alt="Shram Setu Logo" class="logo" />
+      <p class="p">Connecting Labor with Dignity</p>
+    </div>
+    <div class="right-panel">
+      <div class="form-box">
+        <h1>Login As Worker</h1>
+        <form method="post" action="/login">
+          <label for="login-id">Mobile Number</label>
+          <input type="text" id="login-id" placeholder="Enter your Mobile Number" name="mobile" required>
+
+          <label for="login-password">Password</label>
+          <div class="input-wrapper">
+            <input type="password" id="password" placeholder="Enter your password" name="password">
+            <span class="toggle-password" onclick="togglePassword('password', this)">
+              👀
+            </span>
+          </div>
+          <button type="submit">Login</button>
+          <p>Don't have an account? <a href="/signup_worker">Sign Up</a></p>
+        </form>
+      </div>
+    </div>
+  </div>
+  <script src="script/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Profile View</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: ui-sans-serif, system-ui, sans-serif, "Segoe UI", "Noto Color Emoji";
+    }
+
+    body {
+      background: #ffce9a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      padding: 20px;
+    }
+
+    .profile-container {
+      max-width: 500px;
+      width: 100%;
+      background: white;
+      padding: 40px;
+      border-radius: 16px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      text-align: center;
+    }
+
+    .profile-picture {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin: 0 auto 20px;
+      box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .profile-picture:hover {
+      transform: scale(1.05);
+    }
+
+    .profile-info h2 {
+      font-size: 26px;
+      font-weight: bold;
+      color: #1E2D3D;
+    }
+
+    .profile-info p {
+      font-size: 18px;
+      color: #4b5563;
+      margin: 10px 0;
+    }
+
+    .label {
+      font-weight: bold;
+      color: #1f2937;
+    }
+
+    .file-label {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #1E2D3D;
+      color: white;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      border: none;
+      border-radius: 9999px;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      margin-top: 12px;
+    }
+
+    .file-label:hover {
+      background-color: #163250;
+      transform: scale(1.05);
+    }
+
+    .file-input {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="profile-container">
+    <img src="./images/profileuploads/<%= user.profilepic %>" alt="Profile Picture" class="profile-picture">
+
+    <div class="profile-info">
+      <h2>Account Info</h2>
+      <p><span class="label">Name:</span> <%= user.name %></p>
+      <p><span class="label">Mobile:</span> <%= user.mobile %></p>
+    </div>
+
+    <form autocomplete="off" action="/uploadprofile" method="post" enctype="multipart/form-data">
+        <label for="fileUpload" class="file-label">Select Picture</label>
+        <input type="file" id="fileUpload" class="file-input" name="image">
+        <button type="submit" class="file-label">Change Picture</button>
+    </form>
+  </div>
+</body>
+</html>

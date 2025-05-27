@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About Us - Dark Mode</title>
+  <style>
+    :root {
+      --bg-color:#1E2D3D;
+      --text-color: #e0e0e0;
+      --accent-color: #00bcd4;
+      --card-bg: #1e1e1e;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: auto;
+      background: var(--card-bg);
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.6);
+    }
+
+    h1, h2 {
+      color: var(--accent-color);
+      margin-bottom: 20px;
+    }
+
+    p {
+      margin-bottom: 18px;
+      line-height: 1.7;
+    }
+
+    .hero-image {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+      margin-bottom: 25px;
+    }
+
+    .section {
+      margin-top: 40px;
+    }
+
+    .team-members {
+      display: flex;
+      gap: 30px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .member {
+      background: #2a2a2a;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      width: 220px;
+      transition: transform 0.3s ease;
+    }
+
+    .member:hover {
+      transform: scale(1.05);
+    }
+
+    .member img {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 10px;
+      border: 3px solid var(--accent-color);
+    }
+
+    .member h3 {
+      margin: 10px 0 5px;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .gallery img {
+      width: 100%;
+      border-radius: 8px;
+      transition: transform 0.3s ease;
+    }
+
+    .gallery img:hover {
+      transform: scale(1.05);
+    }
+
+    @media (max-width: 600px) {
+      .member {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <section class="intro">
+      <h1>About Us</h1>
+      <img src="https://via.placeholder.com/1000x400?text=Our+Journey" class="hero-image" alt="Our Journey">
+      <p>
+        Welcome to our digital hub! We're a team of passionate creators, developers, and thinkers who believe in using technology to improve lives.
+        Our journey started with a simple idea – to build tools that make your day-to-day life smoother, smarter, and more connected.
+      </p>
+      <p>
+        Whether you're a student, entrepreneur, or tech enthusiast, we’re here to help you with innovative solutions powered by modern technology.
+        We value collaboration, simplicity, and pushing boundaries.
+      </p>
+    </section>
+
+    <section class="section team">
+      <h2>Meet the Team</h2>
+      <div class="team-members">
+        <div class="member">
+          <img src="https://via.placeholder.com/150" alt="Chaitanya Bishnoi" />
+          <h3>Chaitanya Bishnoi</h3>
+          <p>Founder & Lead Developer</p>
+        </div>
+        <div class="member">
+          <img src="https://via.placeholder.com/150" alt="Suryansh Kumar" />
+          <h3>Ayush Yadav</h3>
+          <p>Frontend developer</p>
+        </div>
+        <div class="member">
+          <img src="https://via.placeholder.com/150" alt="Suryansh Kumar" />
+          <h3>Chaman Bhardwaj</h3>
+          <p>Product Strategist</p>
+        </div>
+        <div class="member">
+          <img src="https://via.placeholder.com/150" alt="Suryansh Kumar" />
+          <h3>Ayush Raj</h3>
+          <p>Frontend developer</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section vision">
+      <h2>Our Vision</h2>
+      <p>
+        We aim to empower the next generation of digital builders. From AI-driven applications to interactive web experiences, we focus on delivering
+        high-quality, accessible, and scalable solutions for everyone.
+      </p>
+    </section>
+
+    <section class="section gallery">
+      <h2>Gallery</h2>
+      <div class="gallery">
+        <img src="https://via.placeholder.com/400x250?text=Office+Vibes" alt="Office Vibes" />
+        <img src="https://via.placeholder.com/400x250?text=Team+Meet" alt="Team Meet" />
+        <img src="https://via.placeholder.com/400x250?text=Project+Demo" alt="Project Demo" />
+        <img src="https://via.placeholder.com/400x250?text=Hackathon+2024" alt="Hackathon 2024" />
+      </div>
+    </section>
+  </div>
+</body>
+</html>
