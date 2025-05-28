@@ -13,7 +13,7 @@ body {
   justify-content: center;
   align-items: center;
   min-height: 100vh; /* instead of height */
-  background: #ffce9a5b;
+  background: #add8e6;
   overflow-x: hidden;
   padding: 20px;
 }
@@ -31,7 +31,7 @@ body {
 }
 /* Left Panel (Logo + Tagline) */
 .left-panel {
-  background: #607894;
+  background: #c7d2fe;
   color: #0d3553;
   width: 40%;
   padding: 40px 30px;
@@ -48,7 +48,8 @@ body {
 
 .left-panel .p {
   font-size: 20px;
-  color: #ffce9a;
+  color: black;
+  font-weight: 600;
 }
 
 /* Right Panel (Form) */
@@ -118,9 +119,9 @@ form input {
 button {
   margin-top: 20px;
   padding: 12px;
-  background-color: #607894;
+  background-color: #c7d2fe; 
   border: none;
-  color: white;
+  color: black;
   font-weight: bold;
   border-radius: 6px;
   cursor: pointer;
@@ -128,7 +129,7 @@ button {
 }
 
 button:hover {
-  background-color: #1E2D3D;
+  background-color: #90a1c8;
 }
 
 /* Navigation link */

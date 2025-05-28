@@ -1,358 +1,224 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Shramsetu</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" href="/images/logo.png">
+  <title>ShramSetu | Empowering Connections</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <style>
-    /* Reset and base styles */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    /* Custom styles for the carousel */
+
+
+    .btn{
+      background-color: #00a8d5;
+      color:white;
+      padding-left:6px;
+      padding-right:6px;
+      padding-top:4px;
+      padding-bottom:4px;
+      border-radius: 7%/10%;
+    }
+    
+    .hiring{
+      background-color: #00a8d5;
+      color: white;
+      padding:12px 24px 12px 24px;
+      font: 600;
+      border-radius: 7%/10%;
+      margin-right: 15px;
     }
 
-    body {
-      font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-      font-size: 16px;
-      font-weight: 400;
-      line-height: 1.5;
-      color: rgb(2, 8, 23);
-    }
-    /* Layout */
-    .container {
-      width: 100%;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 16px;
-    }
-
-    /* Header styles */
-    header {
+    .foot{
       display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 10px;
-      background-color: #1E2D3D;
-    }
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-     background-color: transparent; /* Remove gray background */
-    }
-  .logo img {
-     width: 100px; /* Or any size you prefer */
-    height: auto;
-    }
-    .logo-accent {
-      color: rgb(37, 99, 235);
-    }
-
-    nav {
-      display: flex;
-    }
-
-    .nav-buttons, .action-buttons {
-      display: flex;
-    }
-
-    /* Button styles */
-    .button {
-      display: flex;
-      align-items: center;
+      background-color: #00a8d5;
+      color: white;
+      padding-top: 16px;
+      padding-bottom: 16px;
       justify-content: center;
-      background-color: #ffce9a;
-      border-radius: 9999px;
-      border: none;
-      font-size: 14px;
-      font-weight: 500;
-      line-height: 20px;
-      padding: 8px 24px;
-      height: 40px;
-      white-space: nowrap;
-      transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
-      cursor: pointer;
-      margin-left: 16px;
     }
 
-    .button:first-child {
-      margin-left: 0;
-    }
-
-    .button-outline {
-      border: 0.666667px solid rgb(226, 232, 240);
-      padding: 24px 32px;
-    }
-
-    /* Main content */
-    main {
-      padding: 48px 16px;
-    }
-
-    .hero-section {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 48px;
-      align-items: center;
-    }
-
-    .hero-content h1 {
-      font-size: 96px;
-      font-weight: 900;
-      letter-spacing: -4.8px;
-      line-height: 96px;
-      color:#1E2D3D;
-    }
-
-    .hero-buttons {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 16px;
-      margin-top: 24px;
-    }
-
-    /* Card styles */
-.card-container {
-  display: flex;
-  align-items: center;
-  position: relative;
-  margin-left: 70px;
-}
-
-.image-slider {
-  display: flex;
-  overflow: hidden;
-  width: 500px;
-}
-
-.image-wrapper {
-  flex: 0 0 100%;
-  display: none; /* Hide all images initially */
-}
-
-.image-wrapper img {
-  width: 500px;
-  height: 400px;
-  object-fit: cover;
-  border-radius: 8%;
-}
-
-.image-wrapper.active {
-  display: block; /* Show only the active image */
-}
-
-.arrow {
-  border: 1px solid black;
-  border-radius: 50%;
-  font-size: 12px;
-  cursor: pointer;
-  padding: 5px;
-}
-    .service-card {
-      background-color: #ffce9a;
-      padding: 16px;
-      border-radius: 8px;
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-    }
-
-    .service-title {
-      font-weight: 500;
-    }
-
-    .service-description {
-      font-size: 14px;
-      color: rgb(107, 114, 128);
-    }
-
-    /* Responsive styles */
-    @media (max-width: 1024px) {
-      .hero-section {
-        grid-template-columns: 1fr;
-      }
-
-      .hero-content h1 {
-        font-size: 64px;
-        letter-spacing: -3px;
-        line-height: 70px;
-      }
-    }
-
-    @media (max-width: 768px) {
-      header {
-        flex-wrap: wrap;
-      }
-
-      .nav-buttons {
-        display: none;
-      }
-
-      .action-buttons {
-        margin-top: 16px;
-        width: 100%;
-        justify-content: center;
-      }
-
-      .hero-content h1 {
-        font-size: 48px;
-        letter-spacing: -2px;
-        line-height: 54px;
-      }
-    }
-      .container1 {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
   
-      padding: 16px;
-      background-color:#1E2D3D;
-    }
-    
-    /* Image sections container */
-    .image-sections {
-      display: flex;
-      flex-direction: column;
-      width: 100%;
-      max-width: 896px;
-      gap: 32px;
-    }
-    
-    /* Common section styles */
-    .section {
-      display: flex;
-      width: 100%;
-      border-radius: 24px;
+    .carousel-container {
+      position: relative;
       overflow: hidden;
-    }
-    
-    /* Gray box styles */
-    .gray-box {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 66.6667%;
-      height: 256px;
-      background-color: rgb(209, 213, 219);
-      padding: 24px;
-      color: rgb(75, 85, 99);
-      font-size: 18px;
-      font-weight: 400;
-      line-height: 28px;
-    }
-    
-    /* Red box styles */
-    .red-box {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 33.3333%;
-      height: 256px;
-      background-color: rgb(248, 113, 113);
-      object-fit: cover;
-      padding: 24px;
-      font-size: 18px;
-      font-weight: 400;
-      line-height: 28px;
-      box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+      width: 100%; /* Adjust as needed */
+      max-width: 400px; /* Match the placeholder width */
+      height: 300px; /* Match the placeholder height */
+      border-radius: 0.5rem;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
     }
 
-    /* Top section red box has white text */
-    .top .red-box {
-      color: rgb(255, 255, 255);
+    .carousel-slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 0.6s ease-in-out;
     }
-    
-    /* Bottom section red box has black text */
-    .bottom .red-box {
-      color: rgb(0, 0, 0);
+
+    .carousel-slide.active {
+      opacity: 1;
     }
-    .ending{
-      height:120px;
-      width:max-content;
-      background-color: #1E2D3D;
-    }
-    
-    /* Responsive styles for small screens */
-    @media (max-width: 640px) {
-      .section {
-        flex-direction: column;
-      }
-      
-      .gray-box,
-      .red-box {
-        width: 100%;
-        height: 192px;
-      }
+
+    .carousel-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 0.5rem;
     }
   </style>
 </head>
-<body>
-  <div class="page-wrapper">
-    <header>
-      <div class="logo"><img src="/images/logo.png">
-      </div>
-      
-      <nav class="nav-buttons">
-        <button class="button service">Services</button>
-        <button class="button about">About</button>
-      </nav>
-      
-      <div class="action-buttons">
-        <button class="button login_user">Login</button>
-        <button class="button signup_user">Sign Up</button>
-        <button class="button profile" action="/profile">Profile</button>
-      </div>
-    </header>
-    <main>
-      <div class="container">
-        <div class="hero-section">
-          <div class="hero-content">
-            <h1>
-              WELCOME TO<br>SHRAMSETU
-            </h1>
-            
-            <div class="hero-buttons">
-              <button class="button button-outline hireworker">Hire Worker</button>
-              <button class="button button-outline  findjob">Find Job</button>
-            </div>
-          </div>
-          <div class="card-container">
-              <div class="image-slider">
-                <div class="image-wrapper"><img src="/images/carpenter.jpg" alt="Carpenter"></div>
-                <div class="image-wrapper"><img src="/images/plumber.jpg" alt="Plumber"></div>
-                <div class="image-wrapper"><img src="/images/painter.jpg" alt="Painter"></div>
-              </div>
-            <button class="arrow right" onclick="scrollRight()">></button>
-          </div>
+<body class="bg-gray-50 text-gray-800">
+  <nav>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between h-16">
+        <div class="flex items-center object-fit-cover">
+          <img src="/images/logo.png" class="h-14 w-auto object-contain" alt="Logo">
         </div>
-      </div>
-    </main>
-  </div>
-  <div class="container1">
-    <div class="image-sections">
-      <!-- Top section - gray background with coral area on right -->
-      <div class="section top">
-        <div class="gray-box">
-          worker
+        <div class="hidden sm:flex items-center space-x-4">
+          <a href="#benefits" class="text-gray-500 hover:text-blue-600 about">Why ShramSetu</a>
+          <a href="#categories" class="text-gray-500 hover:text-blue-600">Categories</a> 
+          <a href="/service" class="text-gray-500 hover:text-blue-600">Services</a>
+          <a href="/about" class="text-gray-500 hover:text-blue-600">About Us</a>
+          <a href="/profile" class="btn">Profile</a>
+          <a href="/signup_user" class="btn">Sign Up</a>
+          <a href="/login_user" class="btn">Login</a>
         </div>
-        <div class="red-box img">
-          <img src="/images/worker.webp">
-        </div>
-      </div>
-      
-      <!-- Bottom section - coral area on left with gray on right -->
-      <div class="section bottom">
-        <div class="red-box">
-          <img src="/images/customer-interaction.jpg">
-        </div>
-        <div class="gray-box">
-          customer
+        <div class="-mr-2 flex items-center sm:hidden">
+          <button class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition">
+            <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
         </div>
       </div>
     </div>
-  </div>
+  </nav>
 
-  <div class="ending">hello</div>
-  <script src="script/landingpage.js"></script>
+  <header class="bg-indigo-100 min-h-screen flex items-center justify-center">
+  <div class="w-full max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between">
+    
+    <!-- Left Side: Text Content -->
+    <div class="text-center md:text-left md:w-1/2">
+      <h2 class="text-5xl font-bold text-black-700 mb-4">Connect with Verified Skilled Workers Near You – in Just 10 Minutes!</h2>
+      <p class="text-lg text-gray-600 mb-8">
+        ShramSetu bridges the gap between local skilled laborers and job opportunities.
+        It empowers workers to find freelance jobs nearby, apply easily, and connect directly
+        with employers for fair work.
+      </p>
+      <a href="/categorySelector"  class="hiring">
+        Hire Worker
+      </a>
+      <a href="/signup_worker"  class="hiring">
+        Find Job
+      </a>
+    </div>
+
+    <!-- Right Side: Carousel -->
+<div class="w-full md:w-1/2 mt-8 md:mt-0 flex justify-center">
+  <div class="carousel-container w-full h-[800px] md:h-[1000px] overflow-hidden rounded-lg shadow-lg">
+    <div class="carousel-slide active w-full h-full">
+      <img src="/images/carpenter.jpg" alt="Image 1" class="object-cover w-full h-full">
+    </div>
+    <div class="carousel-slide w-full h-full">
+      <img src="/images/plumber.jpg" alt="Image 2" class="object-cover w-full h-full">
+    </div>
+    <div class="carousel-slide w-full h-full">
+      <img src="/images/painter.jpg" alt="Image 3" class="object-cover w-full h-full">
+    </div>
+    <div class="carousel-slide w-full h-full">
+      <img src="/images/mechanic.jpg" alt="Image 4" class="object-cover w-full h-full">
+    </div>
+    <div class="carousel-slide w-full h-full">
+      <img src="/images/electrician.webp" alt="Image 4" class="object-cover w-full h-full">
+    </div>
+  </div>
+</div>
+  </div>
+</header>
+
+
+  <section id="benefits" class="py-16 bg-gray-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h2 class="text-2xl font-bold text-black-700 mb-8">Why Use ShramSetu?</h2>
+      <div class="grid md:grid-cols-3 lg:grid-cols-6 gap-6">
+        <div class="bg-white p-4 rounded-md shadow-sm flex items-center space-x-2">
+          <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+          <p class="text-sm font-semibold text-gray-700">Verified Workers</p>
+        </div>
+        <div class="bg-white p-4 rounded-md shadow-sm flex items-center space-x-2">
+          <svg class="w-5 h-5 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
+          <p class="text-sm font-semibold text-gray-700">Skilled in Categories</p>
+        </div>
+        <div class="bg-white p-4 rounded-md shadow-sm flex items-center space-x-2">
+          <svg class="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.995 1.995 0 01-2.828 0l-4.243-4.243a8 8 0 1111.314 0z"></path></svg>
+          <p class="text-sm font-semibold text-gray-700">Location Based Hiring</p>
+        </div>
+        <div class="bg-white p-4 rounded-md shadow-sm flex items-center space-x-2">
+          <svg class="w-5 h-5 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h18M3 10h18M3 15h18M7 20h10a2 2 0 002-2V6a2 2 0 00-2-2H7a2 2 0 002 2v12a2 2 0 002 2z"></path></svg>
+          <p class="text-sm font-semibold text-gray-700">Multilingual Support</p>
+        </div>
+        <div class="bg-white p-4 rounded-md shadow-sm flex items-center space-x-2">
+          <svg class="w-5 h-5 text-teal-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 8v1m0-8c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+          <p class="text-sm font-semibold text-gray-700">Transparent Bidding</p>
+        </div>
+        <div class="bg-white p-4 rounded-md shadow-sm flex items-center space-x-2">
+          <svg class="w-5 h-5 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-2m3-4v-2M9 19h6m3-12h-3m-3 3h3m-3-6h3"></path></svg>
+          <p class="text-sm font-semibold text-gray-700">Easy Documentation</p>
+        </div>
+    </div>
+  </div>
+</section>
+
+  <section id="categories" class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h2 class="text-2xl font-bold text-black-700 mb-8">Browse Categories</h2>
+      <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+        <a href="#" class="bg-blue-100 text-blue-700 py-3 rounded-md shadow-sm hover:bg-blue-200 font-semibold">Carpenter</a>
+        <a href="#" class="bg-blue-100 text-blue-700 py-3 rounded-md shadow-sm hover:bg-blue-200 font-semibold">Painter</a>
+        <a href="#" class="bg-blue-100 text-blue-700 py-3 rounded-md shadow-sm hover:bg-blue-200 font-semibold">Electrician</a>
+        <a href="#" class="bg-blue-100 text-blue-700 py-3 rounded-md shadow-sm hover:bg-blue-200 font-semibold">Plumber</a>
+        <a href="#" class="bg-blue-100 text-blue-700 py-3 rounded-md shadow-sm hover:bg-blue-200 font-semibold">Mechanic</a>
+        <a href="#" class="bg-blue-100 text-blue-700 py-3 rounded-md shadow-sm hover:bg-blue-200 font-semibold">Welder</a>
+        <a href="#" class="bg-blue-100 text-blue-700 py-3 rounded-md shadow-sm hover:bg-blue-200 font-semibold">Mason</a>
+        </div>
+    </div>
+  </section>
+
+  <section id="contact" class="py-16 bg-indigo-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h2 class="text-2xl font-bold text-black-700 mb-8">Contact Us</h2>
+      <p class="text-lg text-gray-600">Have questions? Reach out to our team.</p>
+      </div>
+  </section>
+
+  <footer class="foot">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <p>&copy; 2025 ShramSetu. All rights reserved.</p>
+      <div class="mt-4 space-x-4">
+        <a href="#" class="hover:text-blue-200">Privacy Policy</a>
+        <a href="#" class="hover:text-blue-200">Terms of Service</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const carouselContainer = document.querySelector('.carousel-container');
+    const slides = document.querySelectorAll('.carousel-slide');
+    let currentIndex = 0;
+    const intervalTime = 3000; // Change image every 3 seconds (adjust as needed)
+
+    function nextSlide() {
+      slides[currentIndex].classList.remove('active');
+      currentIndex = (currentIndex + 1) % slides.length;
+      slides[currentIndex].classList.add('active');
+    }
+
+    setInterval(nextSlide, intervalTime);
+  </script>
+
 </body>
-</html>    
+</html>
