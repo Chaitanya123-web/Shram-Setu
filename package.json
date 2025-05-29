@@ -7,7 +7,7 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.15.1",
     "multer": "^2.0.0",
-    "node-fetch": "^3.3.2",
+    "node-fetch": "^2.7.0",
     "path": "^0.12.7",
     "punycode": "^2.3.1",
     "streamsearch": "^1.1.0"
