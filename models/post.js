@@ -1,9 +1,5 @@
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost:27017/nodeproject')
-.then(console.log("Database connected"))
-.catch((err)=>{console.log("Database not connected")});
-
 const postSchema = mongoose.Schema({
     user:
     {

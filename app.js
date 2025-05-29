@@ -8,6 +8,14 @@ const multer = require('multer');
 const crypto = require('crypto');
 const fetch = require('node-fetch');
 const punycode = require('punycode/');
+const mongoose = require('mongoose');
+
+mongoose.connect('mongodb://127.0.0.1:27017/shram_setu', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+})
+.then(() => console.log('Database connected'))
+.catch(err => console.log('Database not connected:', err));
 
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
@@ -19,7 +27,6 @@ app.set('view engine','ejs');
 const usermodel = require('./models/user');
 const workermodel = require('./models/worker');
 const postmodel = require('./models/post');
-
 const post = require('./models/post');
 
 //-----------------------Profile picture--------------------------------------

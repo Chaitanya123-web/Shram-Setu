@@ -1,9 +1,5 @@
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost:27017/shram_setu')
-.then(console.log('Database connected'))
-.catch((err)=>console.log("Database not connected"));
-
 const userSchema = mongoose.Schema({
     name:String,
     mobile:Number,
