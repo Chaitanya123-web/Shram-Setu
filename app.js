@@ -6,6 +6,8 @@ const cookieParser = require('cookie-parser');
 const path = require('path');
 const multer = require('multer');
 const crypto = require('crypto');
+const fetch = require('node-fetch');
+const punycode = require('punycode/');
 
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
@@ -219,6 +221,25 @@ function isLoggedIn(req,res,next){
         return res.status(401).send("Invalid or expired token");
     }
 }
+
+app.post('/mylocation',async function(req,res){
+    let {latitude , longitude} = req.body;
+    console.log("Received lat/lng:", latitude, longitude);
+    const apiKey = 'ddec94081de44a4493b20e999d1400a8';
+    const url = `https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=${apiKey}`;
+
+    try{
+        let response = await fetch(url);
+        let data = await response.json();
+        console.log("OpenCage API response:", data);
+
+        const formatted = data?.results?.[0]?.formatted;
+        res.send(formatted);
+    }
+    catch(err){
+        res.send("Error fetching location");
+    }
+});
 
 app.listen(3000,function(){
     console.log('Shram setu started');
