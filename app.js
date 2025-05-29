@@ -9,10 +9,14 @@ const crypto = require('crypto');
 const fetch = require('node-fetch');
 const punycode = require('punycode/');
 const mongoose = require('mongoose');
+require('dotenv').config();
 
-mongoose.connect('mongodb://127.0.0.1:27017/shram_setu')
-.then(() => console.log('Database connected'))
-.catch(err => console.log('Database not connected:', err));
+const mongoUri = process.env.MONGO_URI || 'mongodb://localhost:27017/shram_setu';
+
+mongoose.connect(mongoUri)
+  .then(() => console.log('Database connected'))
+  .catch((err) => console.log('Database not connected:', err));
+
 
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
