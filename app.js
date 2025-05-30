@@ -97,7 +97,7 @@ app.post('/uploadproblem',isLoggedIn , problemupload.array('image'),async functi
     if(!user) res.render("login_user");
     let {content,worker} = req.body;
 
-    let filenames = req.files.map(f => f.filename);
+    let filenames = req.files?.map(f => f.filename) || [];
 
     let post = await postmodel.create({
         user:user._id,
