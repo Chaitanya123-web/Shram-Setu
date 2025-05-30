@@ -188,7 +188,7 @@ app.post('/login_worker',async function(req,res){
         if(result){
             let token = jwt.sign({_id:worker._id , mobile},'wfhsoptbb');
             res.cookie("token",token);
-            res.send("correct");
+            res.render('landingpage')
         }
         else res.send("Something is wrong");
     });
