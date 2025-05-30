@@ -5,7 +5,12 @@ const workerSchema = mongoose.Schema({
     mobile:Number,
     password:String,
     location:String,
-    job:String
+    job:String,
+    profilepic:
+    {
+        type:String,
+        default:"default.png"
+    }
 });
 
 module.exports = mongoose.model('worker',workerSchema);

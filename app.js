@@ -76,11 +76,20 @@ app.get('/service',isLoggedIn ,async function(req,res){
 });
 
 app.post('/uploadprofile',isLoggedIn , profileupload.single('image'),async function(req,res){
-    let user = await usermodel.findOne({mobile:req.user.mobile});
-    user.profilepic = req.file.filename;
-    await user.save();
-    res.redirect('/profile');
+    if(req.userType=='user'){
+        let user = await usermodel.findOne({mobile:req.user.mobile});
+        user.profilepic = req.file.filename;
+        await user.save();
+        res.redirect('/profile');
+    }
+    else if(req.userType=='worker'){
+        let worker = await workermodel.findOne({mobile:req.worker.mobile});
+        worker.profilepic = req.file.filename;
+        await worker.save();
+        res.redirect('/profile');
+    }
 })
+
 
 app.post('/uploadproblem',isLoggedIn , problemupload.array('image'),async function(req,res){
     let {mobile} = req.user;
