@@ -215,7 +215,7 @@ textarea:focus {
         
         <div class="buttons-container">
           <label for="fileUpload" class="file-label">Choose File</label>
-          <input type="file" id="fileUpload" class="file-input" name="image" multiple>
+          <input type="file" id="fileUpload" class="file-input" name="image[]" multiple>
           <button type="submit" class="btn next-btn">Submit</button>
         </div>
       </form>
@@ -230,31 +230,23 @@ textarea:focus {
     </div>
   </div>
 
-  <script>
+<script>
   const fileInput = document.getElementById('fileUpload');
-  const formSection = document.querySelector('.form-section');
-
   const previewContainer = document.createElement('div');
-  previewContainer.style.marginTop = "20px";
-  previewContainer.id = "previewContainer";
-  formSection.appendChild(previewContainer);
+  fileInput.parentNode.insertBefore(previewContainer, fileInput.nextSibling);
 
   fileInput.addEventListener('change', () => {
     previewContainer.innerHTML = '';
-
     const files = fileInput.files;
 
     for (let i = 0; i < files.length; i++) {
-      const file = files[i];
-
-      const fileDiv = document.createElement('div');
-      fileDiv.textContent = `📎 ${file.name}`;
-      fileDiv.style.marginBottom = "8px";
-      fileDiv.style.fontSize = "16px";
-      previewContainer.appendChild(fileDiv);
+      const p = document.createElement('p');
+      p.textContent = `📎 ${files[i].name}`;
+      previewContainer.appendChild(p);
     }
   });
 </script>
+
 
 </body>
 </html>
