@@ -210,25 +210,51 @@ app.get('/logout', isLoggedIn , function(req,res){
     res.send('Logged out');
 })
 
-app.get('/profile', isLoggedIn , async function(req,res){
-    let user = await usermodel.findOne({mobile:req.user.mobile});
-    res.render('profile_worker',{user});
+app.get('/profile', isLoggedIn, async function(req, res) {
+    if (req.userType === 'user') {
+        let user = await usermodel.findOne({ mobile: req.user.mobile });
+        return res.render('profile_worker', { user });
+    } else if (req.userType === 'worker') {
+        let worker = await workermodel.findOne({ mobile: req.user.mobile });
+        return res.render('profile_worker1', { worker });
+    } else {
+        return res.send("Not authorized");
+    }
 });
 
-function isLoggedIn(req,res,next){
+
+function isLoggedIn(req, res, next) {
     const token = req.cookies?.token;
     if (!token) {
-        return res.redirect('login_user');
+        return res.redirect('/login_user');
     }
 
     try {
         const data = jwt.verify(token, 'wfhsoptbb');
-        req.user = data;
-        next();
+        req.user = data; // works for both
+
+        // Now let's detect whether it's a user or worker:
+        usermodel.findOne({ mobile: data.mobile }).then((user) => {
+            if (user) {
+                req.userType = 'user';
+                return next();
+            } else {
+                workermodel.findOne({ mobile: data.mobile }).then((worker) => {
+                    if (worker) {
+                        req.userType = 'worker';
+                        req.worker = worker;
+                        return next();
+                    } else {
+                        return res.status(403).send("Invalid token data.");
+                    }
+                });
+            }
+        });
     } catch (err) {
         return res.status(401).send("Invalid or expired token");
     }
 }
+
 
 app.post('/mylocation',async function(req,res){
     let {latitude , longitude} = req.body;
