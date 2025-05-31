@@ -117,7 +117,7 @@ app.get('/signup_user',function(req,res){
 });
 
 app.post('/signup_user',async function(req,res){
-    let {name , mobile ,password , confirm_password}= req.body;
+    let {name , mobile ,password , confirm_password,location}= req.body;
 
     let user = await usermodel.findOne({mobile});
     if(user) return res.send("User already existed");
@@ -125,7 +125,7 @@ app.post('/signup_user',async function(req,res){
         if(password == confirm_password){
             bcrypt.genSalt(10, function(err, salt) {
                 bcrypt.hash(password, salt,async function(err, hash) {
-                    let created = await usermodel.create({name , mobile , password:hash});
+                    let created = await usermodel.create({name , mobile , password:hash,location});
                 
                     let token = jwt.sign({ _id: created._id, mobile},'wfhsoptbb');
                     res.cookie("token",token);
@@ -142,7 +142,7 @@ app.get('/signup_worker',function(req,res){
 });
 
 app.post('/signup_worker',async function(req,res){
-    let {name , mobile ,password , confirm_password,job}= req.body;
+    let {name , mobile ,password , confirm_password,job,location}= req.body;
 
     let worker = await workermodel.findOne({mobile});
     if(worker) return res.send("Worker already existed");
@@ -150,11 +150,11 @@ app.post('/signup_worker',async function(req,res){
         if(password == confirm_password){
             bcrypt.genSalt(10, function(err, salt) {
                 bcrypt.hash(password, salt,async function(err, hash) {
-                    let created = await workermodel.create({name , mobile , password:hash,job});
+                    let created = await workermodel.create({name , mobile , password:hash,job,location});
                 
                     let token = jwt.sign({mobile},'wfhsoptbb');
                     res.cookie("token",token);
-                    res.send("Job created");
+                    res.render("landingpage");
                 });
             });
         }
