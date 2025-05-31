@@ -1,73 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Company Dashboard - Workers</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f2f7fb;
-      padding: 20px;
-    }
-    h1 {
-      text-align: center;
-      margin-bottom: 30px;
-      color: #333;
-    }
-    .job-group {
-      margin-bottom: 40px;
-      background: #fff;
-      border-radius: 10px;
-      box-shadow: 0 3px 7px rgba(0,0,0,0.1);
-      padding: 20px;
-    }
-    .job-group h2 {
-      color: #0073e6;
-      border-bottom: 2px solid #0073e6;
-      padding-bottom: 8px;
-      margin-bottom: 15px;
-    }
-    .worker-card {
-      border-bottom: 1px solid #ddd;
-      padding: 10px 0;
-    }
-    .worker-card:last-child {
-      border-bottom: none;
-    }
-    .worker-info {
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-    }
-    .worker-info div {
-      margin: 5px 10px 5px 0;
-      min-width: 150px;
-    }
-  </style>
-</head>
-<body>
-  <h1>Company Dashboard - Workers Grouped by Job</h1>
+<h1>Company Dashboard</h1>
 
-  <% if (Object.keys(groupedWorkers).length === 0) { %>
-    <p>No workers found.</p>
-  <% } else { %>
-    <% for (const job in groupedWorkers) { %>
-      <div class="job-group">
-        <h2><%= job %></h2>
+<% posts.forEach(post => { %>
+  <div class="post-box" style="border:1px solid #ccc; margin-bottom:20px; padding:15px;">
+    <h2>Post: <%= post.title || post.description || 'No Title' %></h2>
+    <p><strong>Category:</strong> <%= post.workerCategory %></p>
+    <p><strong>Location:</strong> <%= post.formattedAddress %></p>
 
-        <% groupedWorkers[job].forEach(worker => { %>
-          <div class="worker-card">
-            <div class="worker-info">
-              <div><strong>Name:</strong> <%= worker.name %></div>
-              <div><strong>Mobile:</strong> <%= worker.mobile %></div>
-              <div><strong>Location:</strong> <%= worker.formattedAddress || (worker.latitude + ', ' + worker.longitude) %></div>
-            </div>
-          </div>
-        <% }) %>
-
-      </div>
-    <% } %>
-  <% } %>
-</body>
-</html>
+    <h3>Matching Workers:</h3>
+    <ul>
+      <% post.workers.forEach(worker => { %>
+        <li><%= worker.name %> — <%= worker.job %> — Location: <%= worker.formattedAddress %></li>
+      <% }) %>
+      <% if(post.workers.length === 0) { %>
+        <li>No workers found.</li>
+      <% } %>
+    </ul>
+  </div>
+<% }) %>

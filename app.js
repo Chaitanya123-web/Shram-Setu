@@ -11,7 +11,7 @@ const punycode = require('punycode/');
 const mongoose = require('mongoose');
 require('dotenv').config();
 const companyRoutes = require('./routes/company');
-app.use(companyRoutes);
+app.use('/company', companyRoutes);
 
 
 
