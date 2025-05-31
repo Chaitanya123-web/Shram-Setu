@@ -15,7 +15,7 @@ function getDistance(lat1, lon1, lat2, lon2) {
   return R * c;
 }
 
-router.get('/company/dashboard', async (req, res) => {
+router.get('/dashboard', async (req, res) => {
   try {
     const posts = await UserPost.find().lean(); 
 
