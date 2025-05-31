@@ -276,7 +276,7 @@ app.post('/mylocation',async function(req,res){
         let data = await response.json();
         console.log("OpenCage API response:", data);
 
-        const formatted = data?.results?.[0]?.formatted;
+        const formatted = data?.results;
         res.send(formatted);
     }
     catch(err){
