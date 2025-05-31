@@ -93,6 +93,7 @@
       <h2>Account Info</h2>
       <p><span class="label">Name:</span> <%= user.name %></p>
       <p><span class="label">Mobile:</span> <%= user.mobile %></p>
+      <p><span class="label">Location:</span> <%= user.formattedAddress %></p>
     </div>
 
     <form autocomplete="off" action="/uploadprofile" method="post" enctype="multipart/form-data">
