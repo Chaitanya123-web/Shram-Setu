@@ -28,13 +28,12 @@
           <label for="job">Job</label>
           <input type="text" id="job" placeholder="Enter your Job" name="job" required />
 
-          <label for="location_display">Location</label>
-          <input type="text" id="location_display" placeholder="Fetching your location..." readonly required />
+          <label for="location">Location</label>
+          <input type="text" id="location" placeholder="Click to fetch location" name="formattedAddress" required onclick="getLocation()" />
 
-          <!-- ✅ Hidden inputs inside form -->
-          <input type="hidden" name="latitude" id="latitude" />
-          <input type="hidden" name="longitude" id="longitude" />
-          <input type="hidden" name="location" id="location" />
+          <input type="hidden" id="latitude" name="latitude" />
+          <input type="hidden" id="longitude" name="longitude" />
+
 
           <label for="signup-password">Password</label>
           <div class="input-wrapper">
@@ -55,41 +54,36 @@
     </div>
   </div>
 
-  <script>
-    // Auto fetch location on load
-    window.onload = async function() {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(async (position) => {
-          const latitude = position.coords.latitude;
-          const longitude = position.coords.longitude;
+<script>
+  async function getLocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(async (position) => {
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
 
-          try {
-            const response = await fetch('/mylocation', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify({ latitude, longitude })
-            });
+        document.getElementById('latitude').value = latitude;
+        document.getElementById('longitude').value = longitude;
 
-            const formatted = await response.text();
+        try {
+          const response = await fetch('/mylocation', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ latitude, longitude })
+          });
 
-            document.getElementById('latitude').value = latitude;
-            document.getElementById('longitude').value = longitude;
-            document.getElementById('location').value = formatted;
-            document.getElementById('location_display').value = formatted;
-          } catch (err) {
-            document.getElementById('location_display').value = 'Location fetch error';
-            console.error('Error:', err);
-          }
-        }, () => {
-          document.getElementById('location_display').value = 'Permission denied';
-        });
-      } else {
-        document.getElementById('location_display').value = 'Geolocation not supported';
-      }
-    };
-  </script>
+          const data = await response.json();
+          document.getElementById('location').value = data.formatted || `${latitude}, ${longitude}`;
+        } catch (error) {
+          document.getElementById('location').value = 'Error fetching location';
+        }
+      }, () => {
+        document.getElementById('location').value = 'Permission denied';
+      });
+    } else {
+      document.getElementById('location').value = 'Geolocation not supported';
+    }
+  }
+</script>
 
   <script src="script/script.js"></script>
 </body>

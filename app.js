@@ -117,7 +117,7 @@ app.get('/signup_user',function(req,res){
 });
 
 app.post('/signup_user', async function(req, res) {
-    let { name, mobile, password, confirm_password, location, latitude, longitude } = req.body;
+    let { name, mobile, password, confirm_password, formattedAddress, latitude, longitude } = req.body;
 
     let user = await usermodel.findOne({ mobile });
     if (user) return res.send("User already exists");
@@ -126,7 +126,7 @@ app.post('/signup_user', async function(req, res) {
 
     bcrypt.genSalt(10, function(err, salt) {
         bcrypt.hash(password, salt, async function(err, hash) {
-            let created = await usermodel.create({name,mobile,password: hash,latitude,longitude,formattedAddress: location});
+            let created = await usermodel.create({name,mobile,password: hash,latitude,longitude,formattedAddress});
 
             let token = jwt.sign({ _id: created._id, mobile }, 'wfhsoptbb');
             res.cookie("token", token);
@@ -141,7 +141,7 @@ app.get('/signup_worker',function(req,res){
 });
 
 app.post('/signup_worker', async function(req, res) {
-    let { name, mobile, password, confirm_password, job, location, latitude, longitude } = req.body;
+    let { name, mobile, password, confirm_password, job, formattedAddress, latitude, longitude } = req.body;
 
     let worker = await workermodel.findOne({ mobile });
     if (worker) return res.send("Worker already exists");
@@ -150,7 +150,7 @@ app.post('/signup_worker', async function(req, res) {
 
     bcrypt.genSalt(10, function(err, salt) {
         bcrypt.hash(password, salt, async function(err, hash) {
-            let created = await workermodel.create({name,mobile,password: hash,job,latitude,longitude,formattedAddress: location});
+            let created = await workermodel.create({name,mobile,password: hash,job,latitude,longitude,formattedAddress});
 
             let token = jwt.sign({ mobile }, 'wfhsoptbb');
             res.cookie("token", token);
@@ -262,24 +262,17 @@ function isLoggedIn(req, res, next) {
     }
 }
 
+app.post('/mylocation', async (req, res) => {
+  const { latitude, longitude } = req.body;
 
-app.post('/mylocation',async function(req,res){
-    let {latitude , longitude} = req.body;
-    console.log("Received lat/lng:", latitude, longitude);
-    const apiKey = 'ddec94081de44a4493b20e999d1400a8';
-    const url = `https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=${apiKey}`;
+  try {
+    const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`);
+    const data = await response.json();
 
-    try{
-        let response = await fetch(url);
-        let data = await response.json();
-        console.log("OpenCage API response:", data);
-
-        const formatted = data?.results;
-        res.send(formatted);
-    }
-    catch(err){
-        res.send("Error fetching location");
-    }
+    res.json({ formatted: data.display_name });
+  } catch (err) {
+    res.status(500).json({ formatted: 'Location fetch failed' });
+  }
 });
 
 app.listen(3000,function(){
