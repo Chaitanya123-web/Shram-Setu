@@ -9,7 +9,7 @@
     <h3>Matching Workers:</h3>
     <ul>
       <% post.workers.forEach(worker => { %>
-        <li><%= worker.name %> — <%= worker.job %> — Location: <%= worker.formattedAddress %></li>
+        <li><%= worker.name %> — <%= worker.job %> — Location: <%= worker.formattedAddress %> — Mobile: <%= worker.mobile %></li>
       <% }) %>
       <% if(post.workers.length === 0) { %>
         <li>No workers found.</li>
