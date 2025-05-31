@@ -4,7 +4,9 @@ const userSchema = mongoose.Schema({
     name:String,
     mobile:Number,
     password:String,
-    location:String,
+    latitude:Number,
+    longitude:Number,
+    formattedAddress:String,
     profilepic:
     {
         type:String,

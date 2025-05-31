@@ -116,51 +116,49 @@ app.get('/signup_user',function(req,res){
     res.render('signup_user');
 });
 
-app.post('/signup_user',async function(req,res){
-    let {name , mobile ,password , confirm_password,location}= req.body;
+app.post('/signup_user', async function(req, res) {
+    let { name, mobile, password, confirm_password, location, latitude, longitude } = req.body;
 
-    let user = await usermodel.findOne({mobile});
-    if(user) return res.send("User already existed");
-    else{
-        if(password == confirm_password){
-            bcrypt.genSalt(10, function(err, salt) {
-                bcrypt.hash(password, salt,async function(err, hash) {
-                    let created = await usermodel.create({name , mobile , password:hash,location});
-                
-                    let token = jwt.sign({ _id: created._id, mobile},'wfhsoptbb');
-                    res.cookie("token",token);
-                    res.render("landingpage");
-                });
-            });
-        }
-        else res.send('Password not matching');
-    }
+    let user = await usermodel.findOne({ mobile });
+    if (user) return res.send("User already exists");
+
+    if (password !== confirm_password) return res.send('Passwords do not match');
+
+    bcrypt.genSalt(10, function(err, salt) {
+        bcrypt.hash(password, salt, async function(err, hash) {
+            let created = await usermodel.create({name,mobile,password: hash,latitude,longitude,formattedAddress: location});
+
+            let token = jwt.sign({ _id: created._id, mobile }, 'wfhsoptbb');
+            res.cookie("token", token);
+            res.render("landingpage");
+        });
+    });
 });
+
 
 app.get('/signup_worker',function(req,res){
     res.render('signup_worker');
 });
 
-app.post('/signup_worker',async function(req,res){
-    let {name , mobile ,password , confirm_password,job,location}= req.body;
+app.post('/signup_worker', async function(req, res) {
+    let { name, mobile, password, confirm_password, job, location, latitude, longitude } = req.body;
 
-    let worker = await workermodel.findOne({mobile});
-    if(worker) return res.send("Worker already existed");
-    else{
-        if(password == confirm_password){
-            bcrypt.genSalt(10, function(err, salt) {
-                bcrypt.hash(password, salt,async function(err, hash) {
-                    let created = await workermodel.create({name , mobile , password:hash,job,location});
-                
-                    let token = jwt.sign({mobile},'wfhsoptbb');
-                    res.cookie("token",token);
-                    res.render("landingpage");
-                });
-            });
-        }
-        else res.send('Password not matching');
-    }
+    let worker = await workermodel.findOne({ mobile });
+    if (worker) return res.send("Worker already exists");
+
+    if (password !== confirm_password) return res.send('Passwords do not match');
+
+    bcrypt.genSalt(10, function(err, salt) {
+        bcrypt.hash(password, salt, async function(err, hash) {
+            let created = await workermodel.create({name,mobile,password: hash,job,latitude,longitude,formattedAddress: location});
+
+            let token = jwt.sign({ mobile }, 'wfhsoptbb');
+            res.cookie("token", token);
+            res.render("landingpage");
+        });
+    });
 });
+
 
 
 app.get('/login_user',function(req,res){

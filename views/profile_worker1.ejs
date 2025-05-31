@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Profile View</title>
+  <title>Worker Profile</title>
   <style>
     * {
       box-sizing: border-box;
@@ -76,7 +76,7 @@
     }
 
     .file-label:hover {
-      background-color: #00a8d5;
+      background-color: #008db2;
       transform: scale(1.05);
     }
 
@@ -87,7 +87,7 @@
 </head>
 <body>
   <div class="profile-container">
-    <img src="./images/profileuploads/<%= worker.profilepic %>" alt="Profile Picture" class="profile-picture">
+    <img src="/images/profileuploads/<%= worker.profilepic %>" alt="Profile Picture" class="profile-picture">
 
     <div class="profile-info">
       <h2>Account Info</h2>
@@ -95,6 +95,11 @@
       <p><span class="label">Mobile:</span> <%= worker.mobile %></p>
       <p><span class="label">Location:</span> <%= worker.location %></p>
       <p><span class="label">Job:</span> <%= worker.job %></p>
+      <!-- Uncomment below if needed for admin/debug only -->
+      <!--
+      <p><span class="label">Latitude:</span> <%= worker.latitude %></p>
+      <p><span class="label">Longitude:</span> <%= worker.longitude %></p>
+      -->
     </div>
 
     <form autocomplete="off" action="/uploadprofile" method="post" enctype="multipart/form-data">
