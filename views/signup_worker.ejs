@@ -51,6 +51,37 @@
     </div>
   </div>
 
+  <script>
+
+  async function getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(async (position) => {
+      const latitude = position.coords.latitude;
+      const longitude = position.coords.longitude;
+
+      try {
+        const response = await fetch('/mylocation', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ latitude, longitude })
+        });
+
+        const location = await response.text();
+        document.getElementById('location').value = location;
+      } catch (err) {
+        document.getElementById('location').value = 'Location fetch error';
+        console.error('Error:', err);
+      }
+    }, () => {
+      document.getElementById('location').value = 'Permission denied';
+    });
+  } else {
+    document.getElementById('location').value = 'Geolocation not supported';
+  }
+}
+  </script>
   <script src="script/script.js"></script>
 </body>
 </html>
