@@ -10,6 +10,10 @@ const fetch = require('node-fetch');
 const punycode = require('punycode/');
 const mongoose = require('mongoose');
 require('dotenv').config();
+const companyRoutes = require('./routes/company');
+app.use(companyRoutes);
+
+
 
 const mongoUri = process.env.MONGO_URI || 'mongodb://localhost:27017/shram_setu';
 
