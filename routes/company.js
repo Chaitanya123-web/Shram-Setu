@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const UserPost = require('../models/post');      
 const Worker = require('../models/worker');      
+const User = require('../models/user'); 
 
 function getDistance(lat1, lon1, lat2, lon2) {
   const toRad = (v) => (v * Math.PI) / 180;
@@ -17,21 +18,28 @@ function getDistance(lat1, lon1, lat2, lon2) {
 
 router.get('/dashboard', async (req, res) => {
   try {
-    const posts = await UserPost.find().lean(); 
+    
+    const posts = await UserPost.find()
+      .populate('user')
+      .lean();
 
- 
     const postsWithWorkers = await Promise.all(posts.map(async post => {
+    
+      const userLat = post.user?.latitude || 0;
+      const userLon = post.user?.longitude || 0;
+      const formattedAddress = post.user?.formattedAddress || 'Location Unknown';
 
-      let workers = await Worker.find({ job: post.workerCategory }).lean();
+      let workers = await Worker.find({ job: post.worker }).lean();
 
       workers.sort((a, b) => {
-        const distA = getDistance(post.latitude, post.longitude, a.latitude, a.longitude);
-        const distB = getDistance(post.latitude, post.longitude, b.latitude, b.longitude);
+        const distA = getDistance(userLat, userLon, a.latitude, a.longitude);
+        const distB = getDistance(userLat, userLon, b.latitude, b.longitude);
         return distA - distB;
       });
 
       return {
         ...post,
+        formattedAddress,
         workers
       };
     }));

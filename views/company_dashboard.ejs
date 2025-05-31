@@ -2,8 +2,8 @@
 
 <% posts.forEach(post => { %>
   <div class="post-box" style="border:1px solid #ccc; margin-bottom:20px; padding:15px;">
-    <h2>Post: <%= post.title || post.description || 'No Title' %></h2>
-    <p><strong>Category:</strong> <%= post.workerCategory %></p>
+    <h2>Post: <%= post.content || 'No Description' %></h2>
+    <p><strong>Category:</strong> <%= post.worker || 'No Category' %></p>
     <p><strong>Location:</strong> <%= post.formattedAddress %></p>
 
     <h3>Matching Workers:</h3>
