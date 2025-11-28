@@ -74,7 +74,7 @@
 
 **Tools**<br>
 	•	Git & GitHub<br>
-	•	Render / Vercel for hosting<br>
+	•	Render for hosting<br>
 	•	Postman for testing<br>
 
 <h3>🤝 Contributors</h3>
