@@ -350,7 +350,6 @@ app.get('/hireworker',isLoggedIn , async function(req,res){
 
 app.get('/logout', isLoggedIn , function(req,res){
     res.clearCookie('token');
-    res.send('Logged out');
 })
 
 app.get('/profile', isLoggedIn, async function(req, res) {
