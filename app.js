@@ -154,11 +154,17 @@ app.get('/howToWork',function(req,res){
     res.render('howToWork');
 });
 
-app.post('/',isLoggedIn , async function(req,res){
-    let {name, email, message} = req.body;
-    let feedback = await feedbackmodel.create({name,email,message});
-    res.redirect('/');
-})
+app.post('/api/feedback', async function(req, res) {
+    try {
+        const { name, email, message } = req.body;
+        await feedbackmodel.create({ name, email, message });
+        res.json({ success: true });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ success: false });
+    }
+});
+
 
 app.get('/resetPassword', function (req, res) {
     const { token } = req.query;

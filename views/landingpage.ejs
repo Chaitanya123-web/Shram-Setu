@@ -979,17 +979,19 @@ const formStatus = document.getElementById('formStatus');
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
 
-  submitBtn.textContent = 'Sending...'
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Sending...';
 
-  const formData = new FormData(form);
+  const name = document.getElementById('name').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const message = document.getElementById('message').value.trim();
 
   try {
-   
-fetch('/api/send-email', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({ name, email, message })
-});
+    const response = await fetch('/api/feedback', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, email, message })
+    });
 
     if (response.ok) {
       showMessage('Message sent successfully! We will get back to you soon.', true);
@@ -998,6 +1000,7 @@ fetch('/api/send-email', {
       showMessage('Oops! Something went wrong. Please try again later.', false);
     }
   } catch (err) {
+    console.error(err);
     showMessage('Oops! An error occurred. Please try again later.', false);
   } finally {
     submitBtn.disabled = false;
@@ -1008,7 +1011,7 @@ fetch('/api/send-email', {
 function showMessage(msg, success) {
   formStatus.textContent = msg;
   formStatus.classList.remove('hidden');
-  formStatus.style.color = success ? '#16a34a' : '#dc2626'; 
+  formStatus.style.color = success ? '#16a34a' : '#dc2626';
 }
 
   document.addEventListener('DOMContentLoaded', function () {
