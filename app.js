@@ -337,10 +337,10 @@ app.get('/logout', isLoggedIn , function(req,res){
 app.get('/profile', isLoggedIn, async function(req, res) {
     if (req.userType === 'user') {
         let user = await usermodel.findOne({ mobile: req.user.mobile });
-        return res.render('profile_worker', { user });
+        return res.render('profile_user', { user });
     } else if (req.userType === 'worker') {
         let worker = await workermodel.findOne({ mobile: req.user.mobile });
-        return res.render('profile_worker1', { worker });
+        return res.render('profile_worker', { worker });
     } else {
         return res.send("Not authorized");
     }
