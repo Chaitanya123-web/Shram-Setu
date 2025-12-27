@@ -49,52 +49,58 @@ const upload = multer({
 });
 
 app.post('/uploadproblem', isLoggedIn, upload.array('pictures', 4), async function(req, res) {
-    try {
-
-    console.log("FILES:", req.files?.length);
-    console.log("BODY:", req.body);
-    console.log("CLOUDINARY CONFIG:", cloudinary.config());
-      const { mobile } = req.user;
-      const user = await usermodel.findOne({ mobile });
-      if (!user) return res.status(401).json({ success: false });
-
-        const {
-        name = "",
-        mobile: contactMobile = "",
-        job = "",
-        description = "",
-        estimate_budget = "",
-        formattedAddress = "",
-        latitude = null,
-        longitude = null
-        } = req.body || {};
-
-
-
-      const imageUrls = [];
-
-      if (req.files && req.files.length > 0) {
-        for (const file of req.files) {
-          const result = await cloudinary.uploader.upload(
-            `data:${file.mimetype};base64,${file.buffer.toString('base64')}`,
-            { folder: 'shramsetu/jobs' }
-          );
-          imageUrls.push(result.secure_url);
-        }
-      }
-
-      const post = await postmodel.create({user: user._id,name,mobile: contactMobile,job,description,estimate_budget,formattedAddress,latitude,longitude,pictures: imageUrls});
-
-      user.posts.push(post._id);
-      await user.save();
-
-      return res.json({ success: true });
-    } catch (err) {
-      console.error('Post Job Error:', err);
-      return res.status(500).json({ success: false });
+  try {
+    if (!req.body || Object.keys(req.body).length === 0) {
+      console.error("Multer failed to parse body. Check form headers.");
+      return res.status(400).json({ success: false, message: "Form data missing" });
     }
+
+
+    const {
+      name = "",
+      mobile: contactMobile = "", 
+      job = "",
+      description = "",
+      estimate_budget = "",
+      formattedAddress = "",
+      latitude = null,
+      longitude = null
+    } = req.body;
+
+    const user = await usermodel.findOne({ mobile: req.user.mobile });
+    if (!user) return res.status(401).json({ success: false, message: "User not found" });
+
+    const imageUrls = [];
+    if (req.files && req.files.length > 0) {
+      for (const file of req.files) {
+
+        const result = await cloudinary.uploader.upload(
+          `data:${file.mimetype};base64,${file.buffer.toString('base64')}`,
+          { folder: 'shramsetu/jobs' }
+        );
+        imageUrls.push(result.secure_url);
+      }
+    }
+
+    // 5. Create the post using matching keys
+    const post = await postmodel.create({user: user._id,name,mobile: contactMobile,job, description,
+      estimate_budget,formattedAddress,latitude,longitude,pictures: imageUrls
+    });
+
+    // 6. Link post to user
+    user.posts.push(post._id);
+    await user.save();
+
+    return res.json({ success: true });
+
+  } catch (err) {
+    console.error('Detailed Post Job Error:', err);
+    return res.status(500).json({ 
+      success: false, 
+      error: err.message 
+    });
   }
-);
+});
 
 
 
