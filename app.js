@@ -268,52 +268,59 @@ app.get('/signup_worker',function(req,res){
     res.render('signup_worker');
 });
 
-app.post('/signup_worker', profileupload.fields([
+app.post('/signup_worker',
+  profileupload.fields([
     { name: 'profilepic', maxCount: 1 },
     { name: 'identity', maxCount: 1 }
-]), async function(req, res) {
+  ]),
+  async function (req, res) {
     try {
-        let { name, email, mobile, intro, pincode, job, minimumpay, doNotDisturbStart, doNotDisturbEnd, yearsExperience, ifsc, BankAccountNo} = req.body;
+      let {name,email,mobile,intro,pincode,job,yearsExperience,minimumpay,doNotDisturbStart,doNotDisturbEnd,ifsc,BankAccountNo,latitude,longitude,
+        formattedAddress} = req.body;
 
-        const profilepic = req.files?.profilepic?.[0]?.filename || "default.png";
-        const identity = req.files?.identity?.[0]?.filename || null;
+      const profilepic = req.files?.profilepic?.[0]?.filename || "default.png";
+      const identity = req.files?.identity?.[0]?.filename || null;
 
-        if (!intro && req.body.shortBio) {
-            intro = req.body.shortBio;
-        }
+      if (!intro && req.body.shortBio) {
+        intro = req.body.shortBio;
+      }
 
-        let created = await workermodel.create({name,email,mobile,intro,pincode,job,yearsExperience,minimumpay,doNotDisturbStart,doNotDisturbEnd,ifsc,BankAccountNo,profilepic,identity});
+      const worker = await workermodel.create({name,email,mobile,intro,pincode,job,yearsExperience,minimumpay,doNotDisturbStart,doNotDisturbEnd,ifsc,
+        BankAccountNo,latitude,longitude,formattedAddress,profilepic,identity});
 
-        let token = jwt.sign({ mobile }, 'wfhsoptbb');
-        res.cookie("token", token, cookieOptions(req));
-        res.redirect("/");
+      const token = jwt.sign({ mobile: worker.mobile }, 'wfhsoptbb');
+      res.cookie("token", token, cookieOptions(req));
+      res.redirect("/");
+
     } catch (error) {
-        console.error("Worker Create Error →", error.message);
-        res.status(500).json({ success: false, message: error.message });
+      console.error("Worker Create Error →", error);
+      res.status(500).send("Worker signup failed");
     }
-});
+  }
+);
 
 
 
-app.get('/login_user',function(req,res){
-    res.render('login_user');
-});
 
-app.post('/login_user',async function(req,res){
-    let {mobile ,password}= req.body;
+// app.get('/login_user',function(req,res){
+//     res.render('login_user');
+// });
 
-    let user = await usermodel.findOne({mobile});
-    if(!user) res.send("User not found");
+// app.post('/login_user',async function(req,res){
+//     let {mobile ,password}= req.body;
 
-    bcrypt.compare(password, user.password, function(err, result) {
-        if(result){
-            let token = jwt.sign({_id:user._id , mobile:user.mobile},'wfhsoptbb');
-            res.cookie("token", token, cookieOptions(req));
-            res.redirect("/");
-        }
-        else res.send("Something is wrong");
-    });
-})
+//     let user = await usermodel.findOne({mobile});
+//     if(!user) res.send("User not found");
+
+//     bcrypt.compare(password, user.password, function(err, result) {
+//         if(result){
+//             let token = jwt.sign({_id:user._id , mobile:user.mobile},'wfhsoptbb');
+//             res.cookie("token", token, cookieOptions(req));
+//             res.redirect("/");
+//         }
+//         else res.send("Something is wrong");
+//     });
+// })
 
 app.get('/login_worker',function(req,res){
     res.render('login_worker');
@@ -348,7 +355,9 @@ app.get('/logout', isLoggedIn , function(req,res){
 
 app.get('/profile', isLoggedIn, async function(req, res) {
     if (req.userType === 'user') {
-        let user = await usermodel.findOne({ mobile: req.user.mobile });
+        let user = await usermodel
+        .findOne({ mobile: req.user.mobile })
+        .populate('posts');
         return res.render('profile_user', { user });
     } else if (req.userType === 'worker') {
         let worker = await workermodel.findOne({ mobile: req.user.mobile });

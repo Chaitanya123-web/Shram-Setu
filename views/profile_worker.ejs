@@ -173,19 +173,9 @@
            alt="Profile Picture" 
            class="profile-picture">
 
-      <div class="user-name"><%= user.name %></div>
+      <div class="user-name"><%= worker.name %></div>
       <div class="user-role"><%= worker.job %></div>
 
-      <div class="stats">
-        <div class="stat">
-          <h3>13</h3>
-          <p>Reviews</p>
-        </div>
-        <div class="stat">
-          <h3>4</h3>
-          <p>Years</p>
-        </div>
-      </div>
 
       <div class="verified">
         <p>✔ Identity verified</p>
@@ -203,11 +193,11 @@
 
     <!-- RIGHT -->
     <div class="right-content">
-      <h2>About <%= user.name %></h2>
-      <div class="location">📍 <%= user.formattedAddress %></div>
+      <h2>About <%= worker.name %></h2>
+      <div class="location">📍 <%= worker.formattedAddress %></div>
 
       <div class="info">
-        <p><span class="label">Mobile:</span> <%= user.mobile %></p>
+        <p><span class="label">Mobile:</span> <%= worker.mobile %></p>
       </div>
 
       <div class="reviews">

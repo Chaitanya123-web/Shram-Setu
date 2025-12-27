@@ -315,6 +315,10 @@
     <div class="lg:p-8 p-4 h-full flex flex-col justify-between relative overflow-hidden bg-cover rounded-xl lg:rounded-none bg-center bg-no-repeat" style="background-image: url('/images/carousel/workerbg.png');">
     
    <form action="/signup_worker" method="POST" enctype="multipart/form-data" class="space-y-6 flex-grow max-h-full overflow-y-auto">
+        <input type="hidden" name="latitude" id="latitude">
+        <input type="hidden" name="longitude" id="longitude">
+        <input type="hidden" name="formattedAddress" id="formattedAddress">
+
                     <h2 class="text-3xl font-extrabold text-gray-800 text-center mb-6 relative">
                         <span
                             class="relative inline-block px-6 py-3 rounded-full bg-gradient-to-r from-blue-600 to-indigo-700 text-white shadow-2xl overflow-hidden animate-fade-in-up">
@@ -984,7 +988,6 @@
                     return option ? option.label : 'N/A';
                 },
 
-
                 // Profile Picture Handling
                 handleProfilePictureUpload(event) {
                     const file = event.target.files[0];
@@ -1080,6 +1083,7 @@
                                 const postcode = data.address.postcode || data.address.postal_code;
                                 if (postcode) {
                                     this.formData.servicePincode = postcode;
+                                    document.getElementById('servicePincode').value = postcode;
                                     this.locationStatusMessage = 'Pincode detected successfully!';
                                     this.locationStatusClass = 'text-green-600';
                                     this.validateStep(2); // Re-validate after setting pincode
@@ -1305,5 +1309,40 @@
             }
         }
     </script>
+
+
+    <script>
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+            async (pos) => {
+                const lat = pos.coords.latitude;
+                const lon = pos.coords.longitude;
+
+                const latInput = document.getElementById('latitude');
+                const lonInput = document.getElementById('longitude');
+                const addrInput = document.getElementById('formattedAddress');
+
+                if (!latInput || !lonInput || !addrInput) return;
+
+                latInput.value = lat;
+                lonInput.value = lon;
+
+                try {
+                const res = await fetch(
+                    `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`
+                );
+                const data = await res.json();
+                addrInput.value = data.display_name || '';
+                } catch (err) {
+                console.warn("Reverse geocoding failed");
+                }
+            },
+            () => {
+                console.warn("Location permission denied");
+            }
+            );
+        }
+</script>
+
 </body>
 </html>

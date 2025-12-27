@@ -179,12 +179,12 @@
 
       <div class="stats">
         <div class="stat">
-          <h3>13</h3>
-          <p>Reviews</p>
+          <h3><%= user.posts ? user.posts.length : 0 %></h3>
+          <p>Jobs Posted</p>
         </div>
         <div class="stat">
-          <h3>4</h3>
-          <p>Years</p>
+          <h3>—</h3>
+          <p>Experience</p>
         </div>
       </div>
 
@@ -205,7 +205,10 @@
     <!-- RIGHT -->
     <div class="right-content">
       <h2>About <%= user.name %></h2>
-      <div class="location">📍 <%= user.formattedAddress %></div>
+      <div class="location">
+        📍 <%= user.formattedAddress || 'Location not provided' %>
+      </div>
+
 
       <div class="info">
         <p><span class="label">Mobile:</span> <%= user.mobile %></p>
