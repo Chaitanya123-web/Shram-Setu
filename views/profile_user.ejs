@@ -170,9 +170,8 @@
 
     <!-- LEFT -->
     <div class="left-card"> 
-    <img src="<%= user.profilepic || 'https://res.cloudinary.com/dyon9m6vk/image/upload/v1/default-avatar.png' %>"
-        alt="Profile Picture"
-        class="profile-picture">
+    <img src="<%= user.profilepic %>" class="profile-picture" alt="Profile Picture">
+
 
       <div class="user-name"><%= user.name %></div>
       <div class="user-role">User</div>

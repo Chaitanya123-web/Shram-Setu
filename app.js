@@ -58,8 +58,17 @@ app.post('/uploadproblem', isLoggedIn, upload.array('pictures', 4), async functi
       const user = await usermodel.findOne({ mobile });
       if (!user) return res.status(401).json({ success: false });
 
-      const body = req.body || {};
-      const {name,mobile: contactMobile,job,description,estimate_budget,formattedAddress,latitude,longitude} = body;
+        const {
+        name = "",
+        mobile: contactMobile = "",
+        job = "",
+        description = "",
+        estimate_budget = "",
+        formattedAddress = "",
+        latitude = null,
+        longitude = null
+        } = req.body || {};
+
 
 
       const imageUrls = [];

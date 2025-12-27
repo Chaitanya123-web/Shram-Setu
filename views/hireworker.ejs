@@ -357,7 +357,7 @@
               @change="handleImageUpload($event)"
               class="block w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:bg-blue-600 file:text-white hover:file:bg-blue-700 transition-colors cursor-pointer"
               accept="image/*"
-              name="pictures[]"
+              name="pictures"
             />
             <p class="text-xs text-gray-500 mt-1">Accepted formats: JPG, JPEG, PNG. Max 10MB per image.</p>
             <p x-show="validationErrors.jobImages" x-text="validationErrors.jobImages" class="error-message mt-1"></p>
