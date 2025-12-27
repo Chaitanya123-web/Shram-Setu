@@ -26,9 +26,6 @@ mongoose.connect(mongoUri)
   .then(() => console.log("MongoDB connected"))
   .catch(err => console.error("MongoDB error:", err));
 
-
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname,'public')));
 app.use(cookieParser());
 
@@ -46,6 +43,47 @@ const upload = multer({
   limits: { fileSize: 5 * 1024 * 1024 } // 5MB limit (optional but good)
 });
 
+app.post('/uploadproblem', isLoggedIn, upload.array('pictures', 4), async function(req, res) {
+    try {
+
+    console.log("FILES:", req.files?.length);
+    console.log("BODY:", req.body);
+    console.log("CLOUDINARY CONFIG:", cloudinary.config());
+      const { mobile } = req.user;
+      const user = await usermodel.findOne({ mobile });
+      if (!user) return res.status(401).json({ success: false });
+
+      const body = req.body || {};
+      const {name,mobile: contactMobile,job,description,estimate_budget,formattedAddress,latitude,longitude} = body;
+
+
+      const imageUrls = [];
+
+      if (req.files && req.files.length > 0) {
+        for (const file of req.files) {
+          const result = await cloudinary.uploader.upload(
+            `data:${file.mimetype};base64,${file.buffer.toString('base64')}`,
+            { folder: 'shramsetu/jobs' }
+          );
+          imageUrls.push(result.secure_url);
+        }
+      }
+
+      const post = await postmodel.create({user: user._id,name,mobile: contactMobile,job,description,estimate_budget,formattedAddress,latitude,longitude,pictures: imageUrls});
+
+      user.posts.push(post._id);
+      await user.save();
+
+      return res.json({ success: true });
+    } catch (err) {
+      console.error('Post Job Error:', err);
+      return res.status(500).json({ success: false });
+    }
+  }
+);
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 const contactRouter = require('./routes/contact'); 
 app.use('/api', contactRouter);
@@ -212,42 +250,7 @@ app.post('/uploadprofile', isLoggedIn, upload.single('image'), async function(re
 });
 
 
-app.post('/uploadproblem', isLoggedIn, upload.array('pictures', 4), async function(req, res) {
-    try {
 
-    console.log("FILES:", req.files?.length);
-    console.log("BODY:", req.body);
-    console.log("CLOUDINARY CONFIG:", cloudinary.config());
-      const { mobile } = req.user;
-      const user = await usermodel.findOne({ mobile });
-      if (!user) return res.status(401).json({ success: false });
-
-      const {name,mobile: contactMobile,job,description,estimate_budget,formattedAddress,latitude,longitude} = req.body;
-
-      const imageUrls = [];
-
-      if (req.files && req.files.length > 0) {
-        for (const file of req.files) {
-          const result = await cloudinary.uploader.upload(
-            `data:${file.mimetype};base64,${file.buffer.toString('base64')}`,
-            { folder: 'shramsetu/jobs' }
-          );
-          imageUrls.push(result.secure_url);
-        }
-      }
-
-      const post = await postmodel.create({user: user._id,name,mobile: contactMobile,job,description,estimate_budget,formattedAddress,latitude,longitude,pictures: imageUrls});
-
-      user.posts.push(post._id);
-      await user.save();
-
-      return res.json({ success: true });
-    } catch (err) {
-      console.error('Post Job Error:', err);
-      return res.status(500).json({ success: false });
-    }
-  }
-);
 
 
 app.get('/signup_user',function(req,res){
