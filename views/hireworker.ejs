@@ -739,7 +739,8 @@
         try {
           const response = await fetch('/uploadproblem', {
             method: 'POST',
-            body: form
+            body: form,
+            credentials: 'include' 
           });
 
           const data = await response.json();
