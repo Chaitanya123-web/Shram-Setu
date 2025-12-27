@@ -214,6 +214,10 @@ app.post('/uploadprofile', isLoggedIn, upload.single('image'), async function(re
 
 app.post('/uploadproblem', isLoggedIn, upload.array('pictures[]', 4), async function(req, res) {
     try {
+
+    console.log("FILES:", req.files?.length);
+    console.log("BODY:", req.body);
+    console.log("CLOUDINARY CONFIG:", cloudinary.config());
       const { mobile } = req.user;
       const user = await usermodel.findOne({ mobile });
       if (!user) return res.status(401).json({ success: false });
