@@ -212,7 +212,7 @@ app.post('/uploadprofile', isLoggedIn, upload.single('image'), async function(re
 });
 
 
-app.post('/uploadproblem', isLoggedIn, upload.array('pictures[]', 4), async function(req, res) {
+app.post('/uploadproblem', isLoggedIn, upload.array('pictures', 4), async function(req, res) {
     try {
 
     console.log("FILES:", req.files?.length);
