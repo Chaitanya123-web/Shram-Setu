@@ -446,7 +446,7 @@ function cookieOptions(req) {
   return {
     httpOnly: true,
     secure: true,
-    sameSite: "none"
+    sameSite: "lax"
   };
 }
 
