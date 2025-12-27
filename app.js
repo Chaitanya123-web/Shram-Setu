@@ -49,57 +49,65 @@ const upload = multer({
 });
 
 app.post('/uploadproblem', isLoggedIn, upload.array('pictures', 4), async function(req, res) {
-  try {
-    if (!req.body || Object.keys(req.body).length === 0) {
-      console.error("Multer failed to parse body. Check form headers.");
-      return res.status(400).json({ success: false, message: "Form data missing" });
+    try {
+        // Log to Vercel console for debugging
+        console.log("Body received:", req.body);
+        console.log("Files received:", req.files ? req.files.length : 0);
+
+        // Prevent destructuring crash if body is empty
+        if (!req.body || Object.keys(req.body).length === 0) {
+            return res.status(400).json({ success: false, message: "Form data is empty" });
+        }
+
+        const {
+            name,
+            mobile,            // Key from frontend: form.append('mobile', ...)
+            job,               // Key from frontend: form.append('job', ...)
+            description,
+            estimate_budget,
+            formattedAddress,
+            latitude,
+            longitude
+        } = req.body;
+
+        const user = await usermodel.findOne({ mobile: req.user.mobile });
+        if (!user) return res.status(401).json({ success: false, message: "User not found" });
+
+        // Handle Image Uploads
+        const imageUrls = [];
+        if (req.files && req.files.length > 0) {
+            for (const file of req.files) {
+                const result = await cloudinary.uploader.upload(
+                    `data:${file.mimetype};base64,${file.buffer.toString('base64')}`,
+                    { folder: 'shramsetu/jobs' }
+                );
+                imageUrls.push(result.secure_url);
+            }
+        }
+
+        // Create the Post with Schema-compliant names
+        const post = await postmodel.create({
+            user: user._id,
+            name: name || user.name,
+            mobile: mobile || user.mobile,
+            job: job || "General",
+            description,
+            estimate_budget: Number(estimate_budget) || 0,
+            formattedAddress,
+            latitude: Number(latitude),
+            longitude: Number(longitude),
+            pictures: imageUrls
+        });
+
+        user.posts.push(post._id);
+        await user.save();
+
+        return res.json({ success: true });
+
+    } catch (err) {
+        console.error('Post Job Error:', err);
+        return res.status(500).json({ success: false, message: err.message });
     }
-
-
-    const {
-      name = "",
-      mobile: contactMobile = "", 
-      job = "",
-      description = "",
-      estimate_budget = "",
-      formattedAddress = "",
-      latitude = null,
-      longitude = null
-    } = req.body;
-
-    const user = await usermodel.findOne({ mobile: req.user.mobile });
-    if (!user) return res.status(401).json({ success: false, message: "User not found" });
-
-    const imageUrls = [];
-    if (req.files && req.files.length > 0) {
-      for (const file of req.files) {
-
-        const result = await cloudinary.uploader.upload(
-          `data:${file.mimetype};base64,${file.buffer.toString('base64')}`,
-          { folder: 'shramsetu/jobs' }
-        );
-        imageUrls.push(result.secure_url);
-      }
-    }
-
-    // 5. Create the post using matching keys
-    const post = await postmodel.create({user: user._id,name,mobile: contactMobile,job, description,
-      estimate_budget,formattedAddress,latitude,longitude,pictures: imageUrls
-    });
-
-    // 6. Link post to user
-    user.posts.push(post._id);
-    await user.save();
-
-    return res.json({ success: true });
-
-  } catch (err) {
-    console.error('Detailed Post Job Error:', err);
-    return res.status(500).json({ 
-      success: false, 
-      error: err.message 
-    });
-  }
 });
 
 
@@ -421,33 +429,29 @@ app.post('/mylocation', async (req, res) => {
   }
 });
 
-function isLoggedIn(req, res, next) {
+async function isLoggedIn(req, res, next) {
     const token = req.cookies?.token;
-    if (!token) {
-        return res.redirect('/login_user');
-    }
+    if (!token) return res.redirect('/login_user');
 
     try {
         const data = jwt.verify(token, 'wfhsoptbb');
-        req.user = data; // works for both
+        req.user = data;
 
-        // Now let's detect whether it's a user or worker:
-        usermodel.findOne({ mobile: data.mobile }).then((user) => {
-            if (user) {
-                req.userType = 'user';
-                return next();
-            } else {
-                workermodel.findOne({ mobile: data.mobile }).then((worker) => {
-                    if (worker) {
-                        req.userType = 'worker';
-                        req.worker = worker;
-                        return next();
-                    } else {
-                        return res.status(403).send("Invalid token data.");
-                    }
-                });
-            }
-        });
+        // Efficient lookup
+        const user = await usermodel.findOne({ mobile: data.mobile });
+        if (user) {
+            req.userType = 'user';
+            return next();
+        }
+
+        const worker = await workermodel.findOne({ mobile: data.mobile });
+        if (worker) {
+            req.userType = 'worker';
+            req.worker = worker;
+            return next();
+        }
+
+        return res.status(403).send("Invalid token data.");
     } catch (err) {
         return res.status(401).send("Invalid or expired token");
     }
