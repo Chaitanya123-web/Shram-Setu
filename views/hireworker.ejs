@@ -604,7 +604,20 @@
       locationStatusClass: '',
 
       initForm() {
-        // Optional init code
+        const params = new URLSearchParams(window.location.search);
+        const worker = params.get('worker');
+
+        if (worker) {
+          this.formData.jobCategory = worker;
+
+          const found = this.getCategoryOptions().find(
+            opt => opt.value === worker
+          );
+
+          if (found) {
+            this.formData.jobCategoryLabel = found.label;
+          }
+        }
       },
 
       getCategoryOptions() {

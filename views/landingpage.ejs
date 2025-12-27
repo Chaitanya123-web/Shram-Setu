@@ -7,8 +7,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ShramSetu | Empowering Connections</title>
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
-<script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
   <!-- Fonts & Icons -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -19,7 +19,6 @@
 
   <!-- SwiperJS for Carousel -->
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
 
   <!-- AOS Animations -->
   <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
@@ -436,135 +435,200 @@
     <div class="flex space-x-6 px-12 pb-4" style="min-width: max-content;">
 
       <!-- CARD TEMPLATE -->
-      <div class="flex-none w-72 h-96 rounded-2xl bg-cover bg-center relative shadow-xl overflow-hidden group"
-        style="background-image: url('/images/20250625_1454_Electrician\ at\ Work_remix_01jyk6bqa3ffp82kg63nd7p3xg.png');">
+<!-- CARD TEMPLATE -->
+      <a href="/hireworker?worker=electrician"
+        class="flex-none w-72 h-96 rounded-2xl bg-cover bg-center relative shadow-xl overflow-hidden group block cursor-pointer"
+        style="background-image: url('/images/20250625_1454_Electrician at Work_remix_01jyk6bqa3ffp82kg63nd7p3xg.png');">
+
         <div class="absolute inset-0 bg-black/40 group-hover:bg-black/60 transition duration-300"></div>
+
         <div class="relative z-10 text-white p-6 h-full flex flex-col justify-end">
           <h3 class="text-xl font-bold mb-1">Electricians On-Demand</h3>
           <p class="text-sm mb-4">From short circuits to switchboard</p>
-          <button class="backdrop-blur-md border border-white/30 hover:bg-white/10 transition shadow-md px-4 py-2 rounded-lg font-semibold">
+          <button
+            type="button"
+            class="backdrop-blur-md border border-white/30 hover:bg-white/10 transition shadow-md px-4 py-2 rounded-lg font-semibold">
             Hire Now
           </button>
         </div>
-      </div>
+      </a>
+
 
       <!-- Card 2 -->
-      <div class="flex-none w-72 h-96 rounded-2xl bg-cover bg-center relative shadow-xl overflow-hidden group"
-        style="background-image: url('/images/20250625_1515_Indian\ Carpenter\ at\ Work_simple_compose_01jyk7he90ehrtastqy3729d95.png');">
+      <a href="/hireworker?worker=carpenter"
+        class="flex-none w-72 h-96 rounded-2xl bg-cover bg-center relative shadow-xl overflow-hidden group block cursor-pointer"
+        style="background-image: url('/images/20250625_1515_Indian Carpenter at Work_simple_compose_01jyk7he90ehrtastqy3729d95.png');">
+
         <div class="absolute inset-0 bg-black/40 group-hover:bg-black/60 transition duration-300"></div>
+
         <div class="relative z-10 text-white p-6 h-full flex flex-col justify-end">
           <h3 class="text-xl font-bold mb-1">Carpenters</h3>
           <p class="text-sm mb-4">Furniture fix and fittings</p>
-          <button class="backdrop-blur-md border border-white/30 hover:bg-white/10 transition shadow-md px-4 py-2 rounded-lg font-semibold">
+          <button
+            type="button"
+            class="backdrop-blur-md border border-white/30 hover:bg-white/10 transition shadow-md px-4 py-2 rounded-lg font-semibold">
             Hire Now
           </button>
         </div>
-      </div>
 
-       <!-- Card 3 -->
-      <div class="flex-none w-72 h-96 rounded-2xl bg-cover bg-center relative shadow-xl overflow-hidden group"
-        style="background-image: url('/images/20250625_1523_Indian\ Painter\ at\ Work_simple_compose_01jyk80rzzfgs8gdn4ts605j04.png');">
+      </a>
+
+
+      <!-- Card 3 -->
+      <a href="/hireworker?worker=painter"
+        class="flex-none w-72 h-96 rounded-2xl bg-cover bg-center relative shadow-xl overflow-hidden group block cursor-pointer"
+        style="background-image: url('/images/20250625_1523_Indian Painter at Work_simple_compose_01jyk80rzzfgs8gdn4ts605j04.png');">
+
         <div class="absolute inset-0 bg-black/40 group-hover:bg-black/60 transition duration-300"></div>
+
         <div class="relative z-10 text-white p-6 h-full flex flex-col justify-end">
           <h3 class="text-xl font-bold mb-1">Painting Services</h3>
           <p class="text-sm mb-4">Interior and exterior painting</p>
-          <button class="backdrop-blur-md border border-white/30 hover:bg-white/10 transition shadow-md px-4 py-2 rounded-lg font-semibold">
+          <button
+            type="button"
+            class="backdrop-blur-md border border-white/30 hover:bg-white/10 transition shadow-md px-4 py-2 rounded-lg font-semibold">
             Hire Now
           </button>
         </div>
-      </div>
+
+      </a>
+
 
       <!-- Card 4 -->
-      <div class="flex-none w-72 h-96 rounded-2xl bg-cover bg-center relative shadow-xl overflow-hidden group"
-        style="background-image: url('/images/20250625_1510_Indian\ Plumber\ at\ Work_remix_01jyk791z2efvbjdt8aj5ansr1.png');">
+      <a href="/hireworker?worker=plumber"
+        class="flex-none w-72 h-96 rounded-2xl bg-cover bg-center relative shadow-xl overflow-hidden group block cursor-pointer"
+        style="background-image: url('/images/20250625_1510_Indian Plumber at Work_remix_01jyk791z2efvbjdt8aj5ansr1.png');">
+
         <div class="absolute inset-0 bg-black/40 group-hover:bg-black/60 transition duration-300"></div>
+
         <div class="relative z-10 text-white p-6 h-full flex flex-col justify-end">
           <h3 class="text-xl font-bold mb-1">Plumbers Near You</h3>
           <p class="text-sm mb-4">Repair leaks and pipes</p>
-          <button class="backdrop-blur-md border border-white/30 hover:bg-white/10 transition shadow-md px-4 py-2 rounded-lg font-semibold">
+          <button
+            type="button"
+            class="backdrop-blur-md border border-white/30 hover:bg-white/10 transition shadow-md px-4 py-2 rounded-lg font-semibold">
             Hire Now
           </button>
         </div>
-      </div>
-
+      </a>
 
       <!-- Card 5 -->
-      <div class="flex-none w-72 h-96 rounded-2xl bg-cover bg-center relative shadow-xl overflow-hidden group"
-        style="background-image: url('/images/20250625_1534_House\ Worker\ Driver_simple_compose_01jyk8p3qwfevt5p4cvvb0ppv9.png');">
+      <a href="/hireworker?worker=driver"
+        class="flex-none w-72 h-96 rounded-2xl bg-cover bg-center relative shadow-xl overflow-hidden group block cursor-pointer"
+        style="background-image: url('/images/20250625_1534_House Worker Driver_simple_compose_01jyk8p3qwfevt5p4cvvb0ppv9.png');">
+
         <div class="absolute inset-0 bg-black/40 group-hover:bg-black/60 transition duration-300"></div>
+
         <div class="relative z-10 text-white p-6 h-full flex flex-col justify-end">
           <h3 class="text-xl font-bold mb-1">Drivers</h3>
           <p class="text-sm mb-4">On-demand driving help</p>
-          <button class="backdrop-blur-md border border-white/30 hover:bg-white/10 transition shadow-md px-4 py-2 rounded-lg font-semibold">
+          <button
+            type="button"
+            class="backdrop-blur-md border border-white/30 hover:bg-white/10 transition shadow-md px-4 py-2 rounded-lg font-semibold">
             Hire Now
           </button>
         </div>
-      </div>
+      </a>
 
-       <!-- Card 6 -->
-      <div class="flex-none w-72 h-96 rounded-2xl bg-cover bg-center relative shadow-xl overflow-hidden group"
-        style="background-image: url('/images/20250625_1534_Indian\ Technician\ Working_simple_compose_01jyk8na5fe79s7wbj4sxabv9b.png');">
+
+      <!-- Card 6 -->
+      <a href="/hireworker?worker=technician"
+        class="flex-none w-72 h-96 rounded-2xl bg-cover bg-center relative shadow-xl overflow-hidden group block cursor-pointer"
+        style="background-image: url('/images/20250625_1534_Indian Technician Working_simple_compose_01jyk8na5fe79s7wbj4sxabv9b.png');">
+
         <div class="absolute inset-0 bg-black/40 group-hover:bg-black/60 transition duration-300"></div>
+
         <div class="relative z-10 text-white p-6 h-full flex flex-col justify-end">
           <h3 class="text-xl font-bold mb-1">Appliance Repair</h3>
           <p class="text-sm mb-4">Fix ACs, fridges, more</p>
-          <button class="backdrop-blur-md border border-white/30 hover:bg-white/10 transition shadow-md px-4 py-2 rounded-lg font-semibold">
+          <button
+            type="button"
+            class="backdrop-blur-md border border-white/30 hover:bg-white/10 transition shadow-md px-4 py-2 rounded-lg font-semibold">
             Hire Now
           </button>
         </div>
-      </div>
 
-       <!-- Card 7 -->
-      <div class="flex-none w-72 h-96 rounded-2xl bg-cover bg-center relative shadow-xl overflow-hidden group"
-        style="background-image: url('/images/20250625_1529_Indian\ House\ Cleaning_simple_compose_01jyk8d7gaf6dvcbepb4wgq4qh.png');">
+      </a>
+
+
+      <!-- Card 7 -->
+      <a href="/hireworker?worker=house_cleaner"
+        class="flex-none w-72 h-96 rounded-2xl bg-cover bg-center relative shadow-xl overflow-hidden group block cursor-pointer"
+        style="background-image: url('/images/20250625_1529_Indian House Cleaning_simple_compose_01jyk8d7gaf6dvcbepb4wgq4qh.png');">
+
         <div class="absolute inset-0 bg-black/40 group-hover:bg-black/60 transition duration-300"></div>
+
         <div class="relative z-10 text-white p-6 h-full flex flex-col justify-end">
           <h3 class="text-xl font-bold mb-1">House Help</h3>
           <p class="text-sm mb-4">Daily home assistance</p>
-          <button class="backdrop-blur-md border border-white/30 hover:bg-white/10 transition shadow-md px-4 py-2 rounded-lg font-semibold">
+          <button
+            type="button"
+            class="backdrop-blur-md border border-white/30 hover:bg-white/10 transition shadow-md px-4 py-2 rounded-lg font-semibold">
             Hire Now
           </button>
         </div>
-      </div>
 
-       <!-- Card 8 -->
-      <div class="flex-none w-72 h-96 rounded-2xl bg-cover bg-center relative shadow-xl overflow-hidden group"
-        style="background-image: url('/images/20250625_1533_Indian\ Gardener\ at\ Work_simple_compose_01jyk8n8djfbgr8cztrp3tdngm.png');">
+      </a>
+
+      <!-- Card 8 -->
+      <a href="/hireworker?worker=gardener"
+        class="flex-none w-72 h-96 rounded-2xl bg-cover bg-center relative shadow-xl overflow-hidden group block cursor-pointer"
+        style="background-image: url('/images/20250625_1533_Indian Gardener at Work_simple_compose_01jyk8n8djfbgr8cztrp3tdngm.png');">
+
         <div class="absolute inset-0 bg-black/40 group-hover:bg-black/60 transition duration-300"></div>
+
         <div class="relative z-10 text-white p-6 h-full flex flex-col justify-end">
           <h3 class="text-xl font-bold mb-1">Gardening</h3>
           <p class="text-sm mb-4">Lawn and garden care</p>
-          <button class="backdrop-blur-md border border-white/30 hover:bg-white/10 transition shadow-md px-4 py-2 rounded-lg font-semibold">
+          <button
+            type="button"
+            class="backdrop-blur-md border border-white/30 hover:bg-white/10 transition shadow-md px-4 py-2 rounded-lg font-semibold">
             Hire Now
           </button>
         </div>
-      </div>
 
-       <!-- Card 9 -->
-      <div class="flex-none w-72 h-96 rounded-2xl bg-cover bg-center relative shadow-xl overflow-hidden group"
-        style="background-image: url('/images/20250625_1529_Indian\ Laborers\ at\ Work_simple_compose_01jyk8dv2re6gan2vwhsrf86jg.png');">
+      </a>
+
+
+      <!-- Card 9 -->
+      <a href="/hireworker?worker=labour"
+        class="flex-none w-72 h-96 rounded-2xl bg-cover bg-center relative shadow-xl overflow-hidden group block cursor-pointer"
+        style="background-image: url('/images/20250625_1529_Indian Laborers at Work_simple_compose_01jyk8dv2re6gan2vwhsrf86jg.png');">
+
         <div class="absolute inset-0 bg-black/40 group-hover:bg-black/60 transition duration-300"></div>
+
         <div class="relative z-10 text-white p-6 h-full flex flex-col justify-end">
           <h3 class="text-xl font-bold mb-1">Construction Work</h3>
           <p class="text-sm mb-4">Brickwork and cement jobs</p>
-          <button class="backdrop-blur-md border border-white/30 hover:bg-white/10 transition shadow-md px-4 py-2 rounded-lg font-semibold">
+          <button
+            type="button"
+            class="backdrop-blur-md border border-white/30 hover:bg-white/10 transition shadow-md px-4 py-2 rounded-lg font-semibold">
             Hire Now
           </button>
         </div>
-      </div>
 
-       <!-- Card 10 -->
-      <div class="flex-none w-72 h-96 rounded-2xl bg-cover bg-center relative shadow-xl overflow-hidden group"
-        style="background-image: url('/images/20250625_1521_Indian\ Welder\ at\ Work_simple_compose_01jyk7xk3ge0tsjs4mzq1njf5m.png');">
+      </a>
+
+
+      <!-- Card 10 -->
+      <a href="/hireworker?worker=welder"
+        class="flex-none w-72 h-96 rounded-2xl bg-cover bg-center relative shadow-xl overflow-hidden group block cursor-pointer"
+        style="background-image: url('/images/20250625_1521_Indian Welder at Work_simple_compose_01jyk7xk3ge0tsjs4mzq1njf5m.png');">
+
         <div class="absolute inset-0 bg-black/40 group-hover:bg-black/60 transition duration-300"></div>
+
         <div class="relative z-10 text-white p-6 h-full flex flex-col justify-end">
           <h3 class="text-xl font-bold mb-1">Welders & Fabricators</h3>
           <p class="text-sm mb-4">Metal work and welding</p>
-          <button class="backdrop-blur-md border border-white/30 hover:bg-white/10 transition shadow-md px-4 py-2 rounded-lg font-semibold">
+          <button
+            type="button"
+            class="backdrop-blur-md border border-white/30 hover:bg-white/10 transition shadow-md px-4 py-2 rounded-lg font-semibold">
             Hire Now
           </button>
         </div>
-      </div>
+
+      </a>
+
 
 
     </div>
@@ -934,6 +998,36 @@ function showMessage(msg, success) {
   formStatus.classList.remove('hidden');
   formStatus.style.color = success ? '#16a34a' : '#dc2626'; 
 }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    new Swiper('.communitySwiper', {
+      loop: true,
+      spaceBetween: 24,
+      slidesPerView: 1,
+
+      autoplay: {
+        delay: 3000,
+        disableOnInteraction: false,
+      },
+
+      pagination: {
+        el: '.community-pagination',
+        clickable: true,
+      },
+
+      breakpoints: {
+        640: {
+          slidesPerView: 1,
+        },
+        768: {
+          slidesPerView: 2,
+        },
+        1024: {
+          slidesPerView: 3,
+        },
+      },
+    });
+  });
 
 </script>
 
