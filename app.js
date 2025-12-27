@@ -11,6 +11,15 @@ const fetch = require('node-fetch');
 const mongoose = require('mongoose');
 const nodemailer = require('nodemailer');
 
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname,'public')));
+app.use(cookieParser());
+
+app.set('view engine','ejs');
+
+
 console.log("USE_LOCAL_DB:", process.env.USE_LOCAL_DB);
 
 const mongoUri =
@@ -22,14 +31,10 @@ if (!mongoUri) {
   throw new Error("MongoDB URI is missing");
 }
 
+
 mongoose.connect(mongoUri)
   .then(() => console.log("MongoDB connected"))
   .catch(err => console.error("MongoDB error:", err));
-
-app.use(express.static(path.join(__dirname,'public')));
-app.use(cookieParser());
-
-app.set('view engine','ejs');
 
 const usermodel = require('./models/user');
 const workermodel = require('./models/worker');
@@ -82,8 +87,7 @@ app.post('/uploadproblem', isLoggedIn, upload.array('pictures', 4), async functi
   }
 );
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+
 
 const contactRouter = require('./routes/contact'); 
 app.use('/api', contactRouter);
