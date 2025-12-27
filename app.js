@@ -7,7 +7,6 @@ const bcrypt = require('bcryptjs');
 const cookieParser = require('cookie-parser');
 const path = require('path');
 const multer = require('multer');
-const crypto = require('crypto');
 const fetch = require('node-fetch');
 const mongoose = require('mongoose');
 const nodemailer = require('nodemailer');
@@ -40,43 +39,17 @@ const workermodel = require('./models/worker');
 const postmodel = require('./models/post');
 const feedbackmodel = require('./models/feedback');
 
+const cloudinary = require("./config/cloudinary");
+
+const upload = multer({
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 5 * 1024 * 1024 } // 5MB limit (optional but good)
+});
+
+
 const contactRouter = require('./routes/contact'); 
 app.use('/api', contactRouter);
 
-
-
-
-//-----------------------Profile picture--------------------------------------
-const profilestorage = multer.diskStorage({
-    destination:function(req,file,cb){
-        cb(null,'./public/images/profileuploads')
-    },
-    filename: function(req,file,cb){
-        crypto.randomBytes(12,function(err,bytes){
-            const fn = bytes.toString("hex") + path.extname(file.originalname);
-            cb(null, fn);
-        })
-    }
-});
-
-const profileupload = multer({ storage: profilestorage });
-//-------------------------------------------------------------------------------
-
-//--------------------------Problem picture--------------------------------------
-const problemstorage = multer.diskStorage({
-    destination:function(req,file,cb){
-        cb(null,'./public/images/problemuploads')
-    },
-    filename: function(req,file,cb){
-        crypto.randomBytes(12,function(err,bytes){
-            const fn = bytes.toString("hex") + path.extname(file.originalname);
-            cb(null, fn);
-        })
-    }
-});
-
-const problemupload = multer({ storage: problemstorage });
-//------------------------------------------------------------------------------------
 
 app.get('/', async function(req, res) {
     let user = null;
@@ -212,40 +185,54 @@ app.post('/resetPassword',async function(req,res){
 });
 
 
-app.post('/uploadprofile',isLoggedIn , profileupload.single('image'),async function(req,res){
-    if(req.userType=='user'){
-        let user = await usermodel.findOne({mobile:req.user.mobile});
-        user.profilepic = req.file.filename;
-        await user.save();
-        res.redirect('/profile');
+app.post('/uploadprofile', isLoggedIn, upload.single('image'), async function(req, res) {
+  try {
+    if (!req.file) return res.redirect('/profile');
+
+    const result = await cloudinary.uploader.upload(
+      `data:${req.file.mimetype};base64,${req.file.buffer.toString("base64")}`,
+      { folder: "shramsetu/profiles" }
+    );
+
+    if (req.userType === 'user') {
+      let user = await usermodel.findOne({ mobile: req.user.mobile });
+      user.profilepic = result.secure_url;
+      await user.save();
+    } else {
+      let worker = await workermodel.findOne({ mobile: req.worker.mobile });
+      worker.profilepic = result.secure_url;
+      await worker.save();
     }
-    else if(req.userType=='worker'){
-        let worker = await workermodel.findOne({mobile:req.worker.mobile});
-        worker.profilepic = req.file.filename;
-        await worker.save();
-        res.redirect('/profile');
-    }
-})
+
+    res.redirect('/profile');
+  } catch (err) {
+    console.error("Profile Upload Error:", err);
+    res.status(500).send("Profile upload failed");
+  }
+});
 
 
-app.post('/uploadproblem', isLoggedIn, problemupload.array('pictures[]',4), async function(req, res) {
+app.post('/uploadproblem', isLoggedIn, async function(req, res) {
+  try {
     let { mobile } = req.user;
 
-    let user = await usermodel.findOne({ mobile }).populate('posts');
-    if (!user) return res.redirect("/login_user"); 
+    let user = await usermodel.findOne({ mobile });
+    if (!user) return res.redirect("/login_user");
 
-    let {name,mobile: contactMobile,job:job,description,estimate_budget,formattedAddress,latitude,longitude} = req.body;
+    let {name,mobile: contactMobile,job,description,estimate_budget,formattedAddress,latitude,longitude} = req.body;
 
-    let filenames = req.files?.map(f => f.filename) || [];
-
-    let post = await postmodel.create({user: user._id,name,mobile: contactMobile,job: job,description,estimate_budget,formattedAddress,latitude,longitude,pictures: filenames});
+    let post = await postmodel.create({user: user._id,name,mobile: contactMobile,job,description,estimate_budget,formattedAddress,latitude,longitude,pictures: []   });
 
     user.posts.push(post._id);
     await user.save();
 
-
     res.redirect("/");
+  } catch (err) {
+    console.error("Post Job Error:", err);
+    res.status(500).send("Job posting failed");
+  }
 });
+
 
 
 app.get('/signup_user',function(req,res){
@@ -276,35 +263,48 @@ app.get('/signup_worker',function(req,res){
 });
 
 app.post('/signup_worker',
-  profileupload.fields([
+  upload.fields([
     { name: 'profilepic', maxCount: 1 },
     { name: 'identity', maxCount: 1 }
   ]),
   async function (req, res) {
     try {
-      let {name,email,mobile,intro,pincode,job,yearsExperience,minimumpay,doNotDisturbStart,doNotDisturbEnd,ifsc,BankAccountNo,latitude,longitude,
-        formattedAddress} = req.body;
+      let {name,email,mobile,intro,pincode,job,yearsExperience,minimumpay,doNotDisturbStart,doNotDisturbEnd,ifsc,BankAccountNo,
+        latitude,longitude,formattedAddress} = req.body;
 
-      const profilepic = req.files?.profilepic?.[0]?.filename || "default.png";
-      const identity = req.files?.identity?.[0]?.filename || null;
+      let profilepicUrl = "default.png";
+      let identityUrl = null;
 
-      if (!intro && req.body.shortBio) {
-        intro = req.body.shortBio;
+      if (req.files?.profilepic) {
+        const r = await cloudinary.uploader.upload(
+          `data:${req.files.profilepic[0].mimetype};base64,${req.files.profilepic[0].buffer.toString("base64")}`,
+          { folder: "shramsetu/workers/profile" }
+        );
+        profilepicUrl = r.secure_url;
       }
 
-      const worker = await workermodel.create({name,email,mobile,intro,pincode,job,yearsExperience,minimumpay,doNotDisturbStart,doNotDisturbEnd,ifsc,
-        BankAccountNo,latitude,longitude,formattedAddress,profilepic,identity});
+      if (req.files?.identity) {
+        const r = await cloudinary.uploader.upload(
+          `data:${req.files.identity[0].mimetype};base64,${req.files.identity[0].buffer.toString("base64")}`,
+          { folder: "shramsetu/workers/identity" }
+        );
+        identityUrl = r.secure_url;
+      }
+
+      const worker = await workermodel.create({name,email,mobile,intro,pincode,job,
+        yearsExperience,minimumpay,doNotDisturbStart,doNotDisturbEnd,ifsc,BankAccountNo,latitude,longitude,formattedAddress,profilepic: profilepicUrl,identity: identityUrl});
 
       const token = jwt.sign({ mobile: worker.mobile }, 'wfhsoptbb');
       res.cookie("token", token, cookieOptions(req));
       res.redirect("/");
 
     } catch (error) {
-      console.error("Worker Create Error →", error);
+      console.error("Worker Signup Error:", error);
       res.status(500).send("Worker signup failed");
     }
   }
 );
+
 
 app.get('/login_user',function(req,res){
     res.render('login_user');
