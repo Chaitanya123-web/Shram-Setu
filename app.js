@@ -1,4 +1,3 @@
-require('dotenv').config();
 console.log("USE_LOCAL_DB:", process.env.USE_LOCAL_DB);
 
 const express = require('express');
@@ -13,18 +12,20 @@ const fetch = require('node-fetch');
 const mongoose = require('mongoose');
 const nodemailer = require('nodemailer');
 
-const mongoUri = process.env.USE_LOCAL_DB === 'true'
-  ? process.env.LOCAL_MONGO_URI
-  : process.env.CLOUD_MONGO_URI;
+console.log("USE_LOCAL_DB:", process.env.USE_LOCAL_DB);
+
+const mongoUri =
+  process.env.USE_LOCAL_DB === "true"
+    ? process.env.LOCAL_MONGO_URI
+    : process.env.CLOUD_MONGO_URI;
 
 if (!mongoUri) {
-  console.error(' No MongoDB URI provided.');
-  process.exit(1);
+  throw new Error("MongoDB URI is missing");
 }
 
 mongoose.connect(mongoUri)
-  .then(() => console.log(`Database connected: ${mongoUri.includes('localhost') ? 'Local' : 'Cloud'}`))
-  .catch((err) => console.error(' Database not connected:', err));
+  .then(() => console.log("MongoDB connected"))
+  .catch(err => console.error("MongoDB error:", err));
 
 
 app.use(express.json());
@@ -305,9 +306,6 @@ app.post('/signup_worker',
   }
 );
 
-
-
-
 app.get('/login_user',function(req,res){
     res.render('login_user');
 });
@@ -437,7 +435,4 @@ function cookieOptions(req) {
   };
 }
 
-
-app.listen(3000,function(){
-    console.log('Shram setu started');
-});
+module.exports = app;
