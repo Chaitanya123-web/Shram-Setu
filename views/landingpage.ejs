@@ -757,7 +757,8 @@
 
 <!-- CONTACT SECTION -->
 
-<section id="contact" class="relative bg-[#e6f4ff] py-20 overflow-hidden">
+    
+<section class="contact relative bg-[#e6f4ff] py-20 overflow-hidden">
   <div class="max-w-7xl mx-auto px-6 lg:px-10">
     <div class="grid md:grid-cols-2 gap-12 items-center">
 
@@ -777,61 +778,37 @@
         </div>
       </div>
 
-    <div class="bg-white/90 backdrop-blur-md rounded-3xl shadow-xl p-8 border border-blue-100">
-  <form id="contactForm" class="space-y-6">
-    <div>
-      <label for="name" class="block text-sm font-medium text-gray-800">Full Name</label>
-      <input type="text" id="name" name="name" placeholder="John Doe"
-        class="mt-1 w-full px-4 py-3 rounded-xl border border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 text-gray-800" required />
-    </div>
+      <!-- Form Side -->
+      <div class="bg-white/90 backdrop-blur-md rounded-3xl shadow-xl p-8 border border-blue-100">
+        <form id="contactForm" class="space-y-6" method="POST">
+          <div>
+            <label for="name" class="block text-sm font-medium text-gray-800">Full Name</label>
+            <input type="text" id="name" name="name" placeholder="Ramesh Kumar"
+              class="mt-1 w-full px-4 py-3 rounded-xl border border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 text-gray-800" required />
+          </div>
 
-    <div>
-      <label for="email" class="block text-sm font-medium text-gray-800">Email Address</label>
-      <input type="email" id="email" name="email" placeholder="you@example.com"
-        class="mt-1 w-full px-4 py-3 rounded-xl border border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 text-gray-800" required />
-    </div>
+          <div>
+            <label for="email" class="block text-sm font-medium text-gray-800">Email Address</label>
+            <input type="email" id="email" name="email" placeholder="ramesh@example.com"
+              class="mt-1 w-full px-4 py-3 rounded-xl border border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 text-gray-800" required />
+          </div>
 
-    <div>
-      <label for="message" class="block text-sm font-medium text-gray-800">Your Message</label>
-      <textarea id="message" rows="5" name="message" placeholder="Type your message here..."
-        class="mt-1 w-full px-4 py-3 rounded-xl border border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 text-gray-800" required></textarea>
-    </div>
+          <div>
+            <label for="message" class="block text-sm font-medium text-gray-800">Your Message</label>
+            <textarea id="message" name="message" rows="5" placeholder="Type your message here..."
+              class="mt-1 w-full px-4 py-3 rounded-xl border border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 text-gray-800" required></textarea>
+          </div>
 
-    <div>
-      <button type="submit"
-        class="w-full bg-blue-600 text-white font-semibold py-3 rounded-xl shadow-md hover:bg-blue-700 hover:scale-105 transition-transform duration-300">
-        Send Message
-      </button>
-    </div>
+          <div>
+            <button type="submit" id="submitBtn"
+              class="w-full bg-blue-600 text-white font-semibold py-3 rounded-xl shadow-md hover:bg-blue-700 hover:scale-105 transition-transform duration-300">
+              Send Message
+            </button>
+          </div>
 
-    <p id="successMsg" class="hidden text-green-600 font-semibold text-center mt-4">
-      Message sent successfully! We will get back to you soon.
-    </p>
-  </form>
-</div>
-
-<script>
-document.getElementById("contactForm").addEventListener("submit", async (e) => {
-  e.preventDefault();
-
-  let formData = {
-    name: document.getElementById("name").value,
-    email: document.getElementById("email").value,
-    message: document.getElementById("message").value
-  };
-
-const res = await fetch("/company/api/contact", {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({ name, email, message })
-});
-
-  if (res.ok) {
-    document.getElementById("successMsg").classList.remove("hidden");
-    document.getElementById("contactForm").reset();
-  }
-});
-</script>
+          <p id="formStatus" class="hidden text-center mt-4 font-semibold"></p>
+        </form>
+      </div>
 
     </div>
   </div>
@@ -896,26 +873,46 @@ const res = await fetch("/company/api/contact", {
 </footer>
   
 <script>
-document.getElementById("contactForm").addEventListener("submit", async (e) => {
+
+const form = document.getElementById('contactForm');
+const submitBtn = document.getElementById('submitBtn');
+const formStatus = document.getElementById('formStatus');
+
+form.addEventListener('submit', async (e) => {
   e.preventDefault();
 
-  const name = document.getElementById("name").value.trim();
-  const email = document.getElementById("email").value.trim();
-  const message = document.getElementById("message").value.trim();
+  submitBtn.textContent = 'Sending...'
 
-  const res = await fetch("/company/api/contact", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ name, email, message })
-  });
+  const formData = new FormData(form);
 
-  if (res.ok) {
-    document.getElementById("successMsg").classList.remove("hidden");
-    document.getElementById("contactForm").reset();
-  } else {
-    alert("Failed to submit. Try again!");
+  try {
+   
+fetch('/api/send-email', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ name, email, message })
+});
+
+    if (response.ok) {
+      showMessage('Message sent successfully! We will get back to you soon.', true);
+      form.reset();
+    } else {
+      showMessage('Oops! Something went wrong. Please try again later.', false);
+    }
+  } catch (err) {
+    showMessage('Oops! An error occurred. Please try again later.', false);
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Send Message';
   }
 });
+
+function showMessage(msg, success) {
+  formStatus.textContent = msg;
+  formStatus.classList.remove('hidden');
+  formStatus.style.color = success ? '#16a34a' : '#dc2626'; 
+}
+
 </script>
 
 </body>
