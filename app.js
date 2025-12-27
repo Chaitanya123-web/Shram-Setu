@@ -302,45 +302,45 @@ app.post('/signup_worker',
 
 
 
-// app.get('/login_user',function(req,res){
-//     res.render('login_user');
-// });
-
-// app.post('/login_user',async function(req,res){
-//     let {mobile ,password}= req.body;
-
-//     let user = await usermodel.findOne({mobile});
-//     if(!user) res.send("User not found");
-
-//     bcrypt.compare(password, user.password, function(err, result) {
-//         if(result){
-//             let token = jwt.sign({_id:user._id , mobile:user.mobile},'wfhsoptbb');
-//             res.cookie("token", token, cookieOptions(req));
-//             res.redirect("/");
-//         }
-//         else res.send("Something is wrong");
-//     });
-// })
-
-app.get('/login_worker',function(req,res){
-    res.render('login_worker');
+app.get('/login_user',function(req,res){
+    res.render('login_user');
 });
 
-app.post('/login_worker',async function(req,res){
+app.post('/login_user',async function(req,res){
     let {mobile ,password}= req.body;
 
-    let worker = await workermodel.findOne({mobile});
-    if(!worker)res.send("Worker not found");
+    let user = await usermodel.findOne({mobile});
+    if(!user) res.send("User not found");
 
-    bcrypt.compare(password, worker.password, function(err, result) {
+    bcrypt.compare(password, user.password, function(err, result) {
         if(result){
-            let token = jwt.sign({_id:worker._id , mobile},'wfhsoptbb');
+            let token = jwt.sign({_id:user._id , mobile:user.mobile},'wfhsoptbb');
             res.cookie("token", token, cookieOptions(req));
             res.redirect("/");
         }
         else res.send("Something is wrong");
     });
 })
+
+// app.get('/login_worker',function(req,res){
+//     res.render('login_worker');
+// });
+
+// app.post('/login_worker',async function(req,res){
+//     let {mobile ,password}= req.body;
+
+//     let worker = await workermodel.findOne({mobile});
+//     if(!worker)res.send("Worker not found");
+
+//     bcrypt.compare(password, worker.password, function(err, result) {
+//         if(result){
+//             let token = jwt.sign({_id:worker._id , mobile},'wfhsoptbb');
+//             res.cookie("token", token, cookieOptions(req));
+//             res.redirect("/");
+//         }
+//         else res.send("Something is wrong");
+//     });
+// })
 
 app.get('/hireworker',isLoggedIn , async function(req,res){
     const workerType = req.query.worker;
