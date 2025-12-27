@@ -169,10 +169,10 @@
   <div class="profile-wrapper">
 
     <!-- LEFT -->
-    <div class="left-card">
-      <img src="./images/profileuploads/<%= user.profilepic %>" 
-           alt="Profile Picture" 
-           class="profile-picture">
+    <div class="left-card"> 
+    <img src="<%= user.profilepic || 'https://res.cloudinary.com/dyon9m6vk/image/upload/v1/default-avatar.png' %>"
+        alt="Profile Picture"
+        class="profile-picture">
 
       <div class="user-name"><%= user.name %></div>
       <div class="user-role">User</div>

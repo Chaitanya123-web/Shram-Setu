@@ -212,27 +212,38 @@ app.post('/uploadprofile', isLoggedIn, upload.single('image'), async function(re
 });
 
 
-app.post('/uploadproblem', isLoggedIn, async function(req, res) {
-  try {
-    let { mobile } = req.user;
+app.post('/uploadproblem', isLoggedIn, upload.array('pictures[]', 4), async function(req, res) {
+    try {
+      const { mobile } = req.user;
+      const user = await usermodel.findOne({ mobile });
+      if (!user) return res.status(401).json({ success: false });
 
-    let user = await usermodel.findOne({ mobile });
-    if (!user) return res.redirect("/login_user");
+      const {name,mobile: contactMobile,job,description,estimate_budget,formattedAddress,latitude,longitude} = req.body;
 
-    let {name,mobile: contactMobile,job,description,estimate_budget,formattedAddress,latitude,longitude} = req.body;
+      const imageUrls = [];
 
-    let post = await postmodel.create({user: user._id,name,mobile: contactMobile,job,description,estimate_budget,formattedAddress,latitude,longitude,pictures: []   });
+      if (req.files && req.files.length > 0) {
+        for (const file of req.files) {
+          const result = await cloudinary.uploader.upload(
+            `data:${file.mimetype};base64,${file.buffer.toString('base64')}`,
+            { folder: 'shramsetu/jobs' }
+          );
+          imageUrls.push(result.secure_url);
+        }
+      }
 
-    user.posts.push(post._id);
-    await user.save();
+      const post = await postmodel.create({user: user._id,name,mobile: contactMobile,job,description,estimate_budget,formattedAddress,latitude,longitude,pictures: imageUrls});
 
-    res.redirect("/");
-  } catch (err) {
-    console.error("Post Job Error:", err);
-    res.status(500).send("Job posting failed");
+      user.posts.push(post._id);
+      await user.save();
+
+      return res.json({ success: true });
+    } catch (err) {
+      console.error('Post Job Error:', err);
+      return res.status(500).json({ success: false });
+    }
   }
-});
-
+);
 
 
 app.get('/signup_user',function(req,res){

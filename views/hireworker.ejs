@@ -742,15 +742,18 @@
             body: form
           });
 
-          if (response.ok) {
-            alert('✅ Job posted successfully!');
-            window.location.href = '/'; 
+          const data = await response.json();
+
+          if (data.success) {
+            alert(' Job posted successfully!');
+            window.location.href = '/';
           } else {
-            alert('❌ Something went wrong while posting the job.');
+            alert(' Something went wrong while posting the job.');
           }
+
         } catch (error) {
           console.error(error);
-          alert('⚠️ Error submitting the form. Please try again.');
+          alert(' Error submitting the form. Please try again.');
         }
       }
     }
