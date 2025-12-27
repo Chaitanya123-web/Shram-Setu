@@ -77,8 +77,23 @@ const problemstorage = multer.diskStorage({
 const problemupload = multer({ storage: problemstorage });
 //------------------------------------------------------------------------------------
 
-app.get('/',function(req,res){
-    res.render('landingpage');
+app.get('/', async function(req, res) {
+    let user = null;
+
+    const token = req.cookies?.token;
+    if (token) {
+        try {
+            const data = jwt.verify(token, 'wfhsoptbb');
+
+            user = await usermodel.findOne({ mobile: data.mobile }) 
+                || await workermodel.findOne({ mobile: data.mobile });
+
+        } catch (err) {
+            user = null;
+        }
+    }
+
+    res.render('landingpage', { user });
 });
 
 app.get('/about',function(req,res){
