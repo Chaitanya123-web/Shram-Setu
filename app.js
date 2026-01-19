@@ -360,25 +360,25 @@ app.post('/login_user',async function(req,res){
     });
 })
 
-// app.get('/login_worker',function(req,res){
-//     res.render('login_worker');
-// });
+app.get('/login_worker',function(req,res){
+     res.render('login_worker');
+});
 
-// app.post('/login_worker',async function(req,res){
-//     let {mobile ,password}= req.body;
+app.post('/login_worker',async function(req,res){
+    let {mobile ,password}= req.body;
 
-//     let worker = await workermodel.findOne({mobile});
-//     if(!worker)res.send("Worker not found");
+    let worker = await workermodel.findOne({mobile});
+    if(!worker)res.send("Worker not found");
 
-//     bcrypt.compare(password, worker.password, function(err, result) {
-//         if(result){
-//             let token = jwt.sign({_id:worker._id , mobile},'wfhsoptbb');
-//             res.cookie("token", token, cookieOptions(req));
-//             res.redirect("/");
-//         }
-//         else res.send("Something is wrong");
-//     });
-// })
+    bcrypt.compare(password, worker.password, function(err, result) {
+        if(result){
+            let token = jwt.sign({_id:worker._id , mobile},'wfhsoptbb');
+            res.cookie("token", token, cookieOptions(req));
+            res.redirect("/");
+        }
+        else res.send("Something is wrong");
+    });
+})
 
 app.get('/hireworker',isLoggedIn , async function(req,res){
     const workerType = req.query.worker;
@@ -464,5 +464,12 @@ function cookieOptions(req) {
     sameSite: "lax"
   };
 }
+
+
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
 
 module.exports = app;
