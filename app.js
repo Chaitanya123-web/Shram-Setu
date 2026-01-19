@@ -423,7 +423,13 @@ app.post('/mylocation', async (req, res) => {
 
 async function isLoggedIn(req, res, next) {
     const token = req.cookies?.token;
-    if (!token) return res.redirect('/login_user');
+    if (!token) {
+        if (req.headers.accept?.includes('application/json') || req.xhr) {
+            return res.status(401).json({ success: false, message: "Not authenticated" });
+        }
+        return res.redirect('/login_user');
+    }
+
 
     try {
         const data = jwt.verify(token, 'wfhsoptbb');

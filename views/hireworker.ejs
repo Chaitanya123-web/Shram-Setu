@@ -765,8 +765,17 @@
             credentials: 'include' 
           });
 
-          const data = await response.json();
+          if (!response.ok) {
+            throw new Error("Server error");
+          }
 
+          const contentType = response.headers.get("content-type");
+          if (!contentType || !contentType.includes("application/json")) {
+            throw new Error("Invalid response");
+          }
+
+          const data = await response.json();
+          
           if (data.success) {
             alert(' Job posted successfully!');
             window.location.href = '/';
