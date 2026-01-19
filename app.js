@@ -12,7 +12,6 @@ const mongoose = require('mongoose');
 const nodemailer = require('nodemailer');
 const crypto = require('crypto');
 
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname,'public')));
@@ -20,7 +19,7 @@ app.use(cookieParser());
 
 app.set('view engine','ejs');
 
-
+require('dotenv').config();
 console.log("USE_LOCAL_DB:", process.env.USE_LOCAL_DB);
 
 const mongoUri =
@@ -348,7 +347,9 @@ app.post('/login_user',async function(req,res){
     let {mobile ,password}= req.body;
 
     let user = await usermodel.findOne({mobile});
-    if(!user) res.send("User not found");
+    if (!user) {
+        return res.status(404).send("User not found");
+    }
 
     bcrypt.compare(password, user.password, function(err, result) {
         if(result){
@@ -368,7 +369,9 @@ app.post('/login_worker',async function(req,res){
     let {mobile ,password}= req.body;
 
     let worker = await workermodel.findOne({mobile});
-    if(!worker)res.send("Worker not found");
+    if (!worker) {
+        return res.status(404).send("Worker not found");
+    }
 
     bcrypt.compare(password, worker.password, function(err, result) {
         if(result){
