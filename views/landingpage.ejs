@@ -52,7 +52,7 @@
   </style>
 
 <script>
-  window.isLoggedIn = <%= typeof user !== 'undefined' && user ? 'true' : 'false' %>;
+  window.isLoggedIn = `<%= typeof user !== 'undefined' && user ? 'true' : 'false' %>`;
 </script>
 
 </head>
