@@ -110,7 +110,7 @@ app.post('/uploadprofile', isLoggedIn, profileupload.single('image'), async func
 });
 
 
-app.post('/uploadproblem', isLoggedIn, problemupload.array('image'), async function(req, res) {
+app.post('/uploadproblem', isLoggedIn, problemupload.array('pictures', 4), async function(req, res) {
     let { mobile } = req.user;
     let user = await usermodel.findOne({ mobile }).populate('posts');
     if (!user) return res.render("login_user");
@@ -124,7 +124,7 @@ app.post('/uploadproblem', isLoggedIn, problemupload.array('image'), async funct
     user.posts.push(post._id);
     await user.save();
 
-    res.redirect("/");
+    return res.json({ success: true });
 });
 
 
